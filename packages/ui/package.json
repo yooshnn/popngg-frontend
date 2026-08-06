@@ -1,0 +1,39 @@
+{
+  "name": "@popngg/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "./static/**/*.css"
+  ],
+  "exports": {
+    "./components/*": "./src/components/*.tsx",
+    "./styles.css": "./static/styles.css"
+  },
+  "scripts": {
+    "typecheck": "tsc",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "dependencies": {
+    "@base-ui/react": "catalog:",
+    "lucide-react": "catalog:",
+    "tailwind-merge": "catalog:",
+    "tailwind-variants": "catalog:"
+  },
+  "devDependencies": {
+    "@popngg/eslint-config": "workspace:*",
+    "@popngg/typescript-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "eslint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}

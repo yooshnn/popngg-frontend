@@ -1,0 +1,4 @@
+{
+  "extends": "@popngg/typescript-config/react",
+  "include": ["src/**/*"]
+}

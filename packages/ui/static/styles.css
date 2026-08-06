@@ -1,0 +1,32 @@
+@import './theme/fonts.css';
+@import 'tailwindcss';
+@import './theme/tokens.css';
+
+@custom-variant disabled-idle (&[data-disabled]:not([data-loading]));
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+    background-color: var(--color-bg-layer-default);
+    color: var(--color-fg-neutral);
+  }
+
+  body {
+    min-width: 320px;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  .lucide {
+    stroke-width: 1.8;
+  }
+}

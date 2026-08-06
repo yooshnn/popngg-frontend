@@ -1,33 +1,28 @@
 import type { Preferences } from './config';
-import { createContext, startTransition, use, useOptimistic } from 'react';
-import { useRevalidator } from 'react-router';
+import { createContext, use, useState } from 'react';
 import { preferencesCookie } from './config';
 
 export interface PreferencesContextValue extends Preferences {
-  setPreference: <K extends keyof Preferences>(key: K, value: Preferences[K]) => void;
+  setPreference: <K extends keyof Preferences>(key: K, value: Preferences[K]) => Promise<void>;
 }
 
 const PreferencesContext = createContext<PreferencesContextValue | null>(null);
 
-export function PreferencesProvider({ children, preferences }: {
+export function PreferencesProvider({ children, initial }: {
   children: React.ReactNode;
-  preferences: Preferences;
+  initial: Preferences;
 }) {
-  const [optimistic, setOptimistic] = useOptimistic(preferences);
-  const { revalidate } = useRevalidator();
+  const [preferences, setPreferences] = useState(initial);
 
-  function setPreference<K extends keyof Preferences>(key: K, value: Preferences[K]) {
-    const next = { ...optimistic, [key]: value };
+  async function setPreference<K extends keyof Preferences>(key: K, value: Preferences[K]) {
+    const next = { ...preferences, [key]: value };
 
-    startTransition(async () => {
-      setOptimistic(next);
-      await preferencesCookie.write(next);
-      await revalidate();
-    });
+    setPreferences(next);
+    await preferencesCookie.write(next);
   }
 
   return (
-    <PreferencesContext value={{ ...optimistic, setPreference }}>
+    <PreferencesContext value={{ ...preferences, setPreference }}>
       {children}
     </PreferencesContext>
   );

@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Turbo
+.turbo/
+
+# Build Outputs
+build/
+dist/
+.react-router/
+
+# Testing
+coverage/
+
+# Cloudflare
+.wrangler/
+.mf/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+!.dev.vars.*.example
+worker-configuration.d.ts
+
+# Env & Secrets
+.env
+.env.*
+*.local
+!.env.example
+!.env.*.example
+
+# Cache & Logs
+*.log
+pnpm-debug.log*
+.eslintcache
+*.tsbuildinfo
+__unconfig*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# System Files
+.DS_Store
+Thumbs.db

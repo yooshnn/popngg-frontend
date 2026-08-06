@@ -1,0 +1,33 @@
+packages:
+  - apps/*
+  - packages/*
+
+allowBuilds:
+  esbuild: false
+  sharp: false
+  workerd: false
+
+shellEmulator: true
+trustPolicy: off
+
+catalog:
+  '@antfu/eslint-config': ^9.2.0
+  '@cloudflare/vite-plugin': ^1.50.0
+  '@eslint-react/eslint-plugin': ^5.18.1
+  '@react-router/dev': ^8.2.0
+  '@tailwindcss/vite': ^4.3.3
+  '@types/node': ^24.13.3
+  '@types/react': ^19.2.17
+  '@types/react-dom': ^19.2.3
+  eslint: ^10.8.0
+  eslint-plugin-react-refresh: ^0.5.3
+  isbot: ^5.2.1
+  react: ^19.2.7
+  react-dom: ^19.2.7
+  react-router: ^8.2.0
+  tailwindcss: ^4.3.3
+  typescript: ^6.0.3
+  vite: ^8.1.5
+  wrangler: ^4.118.0
+
+catalogMode: prefer

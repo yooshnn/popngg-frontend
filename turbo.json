@@ -1,0 +1,23 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["pnpm-workspace.yaml"],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "env": ["COMMIT_SHA"],
+      "outputs": ["build/**"]
+    },
+    "typecheck": {
+      "outputs": [
+        ".react-router/types/**",
+        "worker-configuration.d.ts",
+        "*.tsbuildinfo"
+      ]
+    },
+    "lint": {}
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@popngg/typescript-config/node",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": ["vite.config.ts", "react-router.config.ts"]
+}

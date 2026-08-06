@@ -1,0 +1,40 @@
+{
+  "name": "main",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=dev react-router dev",
+    "build": "react-router build",
+    "build:dev": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=dev react-router build --mode dev",
+    "build:prod": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=prod react-router build --mode prod",
+    "deploy:dev": "pnpm run build:dev && wrangler deploy --env dev",
+    "deploy:prod": "pnpm run build:prod && wrangler deploy --env prod",
+    "preview": "pnpm run build:dev && vite preview",
+    "cf-typegen": "wrangler types && react-router typegen",
+    "typecheck": "pnpm run cf-typegen && tsc -b",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "postinstall": "wrangler types"
+  },
+  "dependencies": {
+    "isbot": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "catalog:",
+    "@popngg/eslint-config": "workspace:*",
+    "@popngg/typescript-config": "workspace:*",
+    "@react-router/dev": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "eslint": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

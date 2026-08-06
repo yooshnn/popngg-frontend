@@ -18,11 +18,14 @@
   },
   "dependencies": {
     "@popngg/ui": "workspace:*",
+    "i18next": "catalog:",
     "isbot": "catalog:",
     "lucide-react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-i18next": "catalog:",
     "react-router": "catalog:",
+    "remix-i18next": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

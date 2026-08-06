@@ -1,9 +1,14 @@
 import type { ButtonProps } from '@popngg/ui/components/button';
 import type { Route } from './+types/home';
+import type { SupportedLanguage } from '~/shared/i18n';
 import { Button, buttonStyles, IconButton } from '@popngg/ui/components/button';
 import { env } from 'cloudflare:workers';
 import { ArrowRightIcon, EllipsisIcon, PlusIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useRevalidator } from 'react-router';
+import { fallbackLanguage, localeCookie, supportedLanguages } from '~/shared/i18n';
+import { getInstance } from '~/shared/i18n/middleware';
 
 type Variant = NonNullable<ButtonProps['variant']>;
 
@@ -24,6 +29,33 @@ const VARIANTS = [
 
 const SIZES = ['sm', 'md', 'lg'] as const satisfies readonly NonNullable<ButtonProps['size']>[];
 
+const FLAGS = { ko: '🇰🇷', ja: '🇯🇵' } as const satisfies Record<SupportedLanguage, string>;
+
+function LocaleToggle() {
+  const { t, i18n } = useTranslation();
+  const { revalidate } = useRevalidator();
+
+  const current = supportedLanguages.find(lng => lng === i18n.language) ?? fallbackLanguage;
+  const next = current === 'ko' ? 'ja' : 'ko';
+
+  async function switchTo(lng: SupportedLanguage) {
+    await localeCookie.write(lng);
+    await i18n.changeLanguage(lng);
+    await revalidate();
+  }
+
+  return (
+    <button
+      type="button"
+      aria-label={t('localeToggle')}
+      className="w-fit cursor-pointer rounded-lg border border-stroke-neutral-weak px-3 py-2 text-xl"
+      onClick={() => void switchTo(next)}
+    >
+      {FLAGS[current]}
+    </button>
+  );
+}
+
 function LoadingDemo({ variant }: { variant: Variant }) {
   const [loading, setLoading] = useState(false);
 
@@ -42,25 +74,37 @@ function LoadingDemo({ variant }: { variant: Variant }) {
   );
 }
 
-export function meta(_: Route.MetaArgs) {
+export function meta({ loaderData }: Route.MetaArgs) {
   return [
-    { title: 'New React Router App' },
+    { title: loaderData.title },
     { name: 'description', content: 'Welcome to React Router!' },
   ];
 }
 
-export function loader() {
-  return { message: env.VALUE_FROM_CLOUDFLARE ?? '' };
+export function loader({ context }: Route.LoaderArgs) {
+  return {
+    message: env.VALUE_FROM_CLOUDFLARE ?? '',
+    title: getInstance(context).t('demo'),
+  };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
+  const { t } = useTranslation();
+
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-10 p-8">
       <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold">Button</h1>
-        <p className="text-sm text-fg-neutral-subtle">
-          12 variants × 3 sizes. Hover, press, focus and disable each cell to compare.
-        </p>
+        <h1 className="text-2xl font-semibold">i18n</h1>
+      </header>
+
+      <section className="flex flex-col gap-2" aria-labelledby="i18n-heading">
+        <p>팝픈 ポップン pop&apos;n</p>
+        <p>{t('demo')}</p>
+        <LocaleToggle />
+      </section>
+
+      <header className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold">button</h1>
       </header>
 
       <section className="flex flex-col gap-6">

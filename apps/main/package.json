@@ -19,6 +19,7 @@
   "dependencies": {
     "@popngg/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",
+    "country-flag-icons": "catalog:",
     "i18next": "catalog:",
     "isbot": "catalog:",
     "ky": "catalog:",

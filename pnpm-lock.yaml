@@ -36,6 +36,9 @@ catalogs:
     '@types/react-dom':
       specifier: ^19.2.3
       version: 19.2.4
+    country-flag-icons:
+      specifier: ^1.6.20
+      version: 1.6.20
     eslint:
       specifier: ^10.8.0
       version: 10.8.0
@@ -107,6 +110,9 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.101.4(react@19.2.8)
+      country-flag-icons:
+        specifier: 'catalog:'
+        version: 1.6.20
       i18next:
         specifier: 'catalog:'
         version: 26.3.6(typescript@6.0.3)
@@ -1579,6 +1585,9 @@ packages:
 
   core-js-compat@3.49.0:
     resolution: {integrity: sha512-VQXt1jr9cBz03b331DFDCCP90b3fanciLkgiOoy8SBHy06gNf+vQ1A3WFLqG7I8TipYIKeYK9wxd0tUrvHcOZA==}
+
+  country-flag-icons@1.6.20:
+    resolution: {integrity: sha512-py8JiEKzjhYw6HPJ0L7SxLgCYim36UPRTZX43/kqGueUCZLSvnrqAiwW8HtQibur7mdkFQUkjOgdK+o/9FBtaw==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -4194,6 +4203,8 @@ snapshots:
   core-js-compat@3.49.0:
     dependencies:
       browserslist: 4.28.7
+
+  country-flag-icons@1.6.20: {}
 
   cross-spawn@7.0.6:
     dependencies:

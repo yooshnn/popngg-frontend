@@ -1,0 +1,69 @@
+import { buttonStyles } from '@popngg/ui/components/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@popngg/ui/components/dropdown-menu';
+import { ChevronDownIcon, LogOutIcon, SquarePenIcon, UserRoundIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
+import { useSession } from '~/entities/session';
+import { useLogout } from '~/features/auth';
+
+export function AccountMenu() {
+  const { t } = useTranslation();
+  const { status, session } = useSession();
+  const { mutate: logout } = useLogout();
+
+  if (status === 'pending') {
+    return <div className="h-9" aria-hidden="true" />;
+  }
+
+  if (status === 'anonymous') {
+    return (
+      <Link className={buttonStyles({ variant: 'neutral-outline', size: 'sm' })} to="/login">
+        {t('header.login')}
+      </Link>
+    );
+  }
+
+  return (
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger
+        aria-label={t('header.account.menuAriaLabel', { name: session.name })}
+        className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-md px-1.5 pr-2 text-sm font-medium text-fg-neutral transition-colors hover:bg-bg-neutral-weak active:bg-bg-neutral-weak-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring"
+      >
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-bg-neutral-weak text-fg-neutral-subtle" role="img" aria-label={t('header.account.avatarAriaLabel')}>
+          <UserRoundIcon aria-hidden="true" className="size-4" />
+        </span>
+        <span className="hidden max-w-20 truncate sm:block">{session.name}</span>
+        <ChevronDownIcon aria-hidden="true" className="size-3.5 text-fg-neutral-subtle" />
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end" className="w-48" sideOffset={6}>
+        <div className="px-3 py-2.5">
+          <p className="text-sm font-semibold text-fg-neutral">{session.name}</p>
+          <p className="mt-0.5 text-xs text-fg-neutral-subtle">
+            {session.id}
+          </p>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <UserRoundIcon aria-hidden="true" className="size-4 text-fg-neutral-subtle" />
+          {t('header.account.viewProfile')}
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <SquarePenIcon aria-hidden="true" className="size-4 text-fg-neutral-subtle" />
+          {t('header.account.editProfile')}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-fg-critical" onClick={() => logout()}>
+          <LogOutIcon aria-hidden="true" className="size-4" />
+          {t('header.account.logout')}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

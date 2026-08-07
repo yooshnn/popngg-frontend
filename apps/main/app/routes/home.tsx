@@ -4,7 +4,7 @@ import { dehydrate } from '@tanstack/react-query';
 import { env } from 'cloudflare:workers';
 import { getQueryClient, http } from '~/shared/api';
 import { getInstance } from '~/shared/i18n/middleware';
-import { ApiDemoSection, AuthDemoSection, ButtonGallerySection, I18nDemoSection, pingQuery, PreferencesDemoSection } from './home.demo';
+import { ApiDemoSection, ButtonGallerySection, I18nDemoSection, pingQuery, PreferencesDemoSection } from './home.demo';
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
@@ -35,18 +35,17 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { message, ping, pong, dehydratedState } = loaderData;
 
   return (
-    <main className="mx-auto flex max-w-5xl flex-col gap-10 p-8">
+    <div className="flex flex-col gap-10 py-8">
       <I18nDemoSection />
       <PreferencesDemoSection />
-      <AuthDemoSection />
       <ApiDemoSection ping={ping} pong={pong} dehydratedState={dehydratedState} />
       <ButtonGallerySection />
 
-      <footer className="text-xs text-fg-placeholder">
+      <p className="text-xs text-fg-placeholder">
         VALUE_FROM_CLOUDFLARE:
         {' '}
         {message || '(unset)'}
-      </footer>
-    </main>
+      </p>
+    </div>
   );
 }

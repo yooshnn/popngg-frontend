@@ -1,18 +1,13 @@
 import type { ButtonProps } from '@popngg/ui/components/button';
 import type { DehydratedState, UseQueryOptions } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
-import type { SupportedLanguage } from '~/shared/i18n';
 import type { Title } from '~/shared/preferences';
 import { Button, buttonStyles, IconButton } from '@popngg/ui/components/button';
 import { HydrationBoundary, useQuery } from '@tanstack/react-query';
 import { ArrowRightIcon, EllipsisIcon, PlusIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useRevalidator } from 'react-router';
-import { useSession } from '~/entities/session';
-import { useLogout } from '~/features/auth';
 import { http } from '~/shared/api';
-import { fallbackLanguage, localeCookie, supportedLanguages } from '~/shared/i18n';
 import { usePreferences } from '~/shared/preferences';
 
 function DemoSection({ title, children }: { title: string; children: ReactNode }) {
@@ -26,33 +21,6 @@ function DemoSection({ title, children }: { title: string; children: ReactNode }
 
 // i18n
 
-const FLAGS = { ko: '🇰🇷', ja: '🇯🇵' } as const satisfies Record<SupportedLanguage, string>;
-
-function LocaleToggle() {
-  const { t, i18n } = useTranslation();
-  const { revalidate } = useRevalidator();
-
-  const current = supportedLanguages.find(lng => lng === i18n.language) ?? fallbackLanguage;
-  const next = current === 'ko' ? 'ja' : 'ko';
-
-  async function switchTo(lng: SupportedLanguage) {
-    await localeCookie.write(lng);
-    await i18n.changeLanguage(lng);
-    await revalidate();
-  }
-
-  return (
-    <button
-      type="button"
-      aria-label={t('localeToggle')}
-      className="w-fit cursor-pointer rounded-lg border border-stroke-neutral-weak px-3 py-2 text-xl"
-      onClick={() => void switchTo(next)}
-    >
-      {FLAGS[current]}
-    </button>
-  );
-}
-
 export function I18nDemoSection() {
   const { t } = useTranslation();
 
@@ -60,7 +28,6 @@ export function I18nDemoSection() {
     <DemoSection title="i18n">
       <p>팝픈 ポップン pop&apos;n</p>
       <p>{t('demo')}</p>
-      <LocaleToggle />
     </DemoSection>
   );
 }
@@ -75,63 +42,10 @@ function TrackName() {
   return <p>{TRACK[title]}</p>;
 }
 
-function TitleToggle() {
-  const { title, setPreference } = usePreferences();
-  const next = title === 'song' ? 'genre' : 'song';
-
-  return (
-    <button
-      type="button"
-      className="w-fit cursor-pointer rounded-lg border border-stroke-neutral-weak px-3 py-2 text-sm"
-      onClick={() => setPreference('title', next)}
-    >
-      {title}
-    </button>
-  );
-}
-
 export function PreferencesDemoSection() {
   return (
     <DemoSection title="preferences">
       <TrackName />
-      <TitleToggle />
-    </DemoSection>
-  );
-}
-
-// auth
-
-export function AuthDemoSection() {
-  const { status, session } = useSession();
-  const { mutate: logout, isPending: isLoggingOut } = useLogout();
-
-  return (
-    <DemoSection title="auth">
-      {status === 'pending' && <p className="text-fg-neutral-subtle">…</p>}
-
-      {status === 'anonymous' && (
-        <Link className={buttonStyles({ variant: 'brand-outline' })} to="/login">
-          로그인
-        </Link>
-      )}
-
-      {status === 'authenticated' && (
-        <div className="flex w-fit items-center gap-3">
-          <p>
-            {session.name}
-            {' · '}
-            <span className="text-fg-neutral-subtle">{session.role}</span>
-          </p>
-          <Button
-            variant="neutral-outline"
-            size="sm"
-            loading={isLoggingOut}
-            onClick={() => logout()}
-          >
-            로그아웃
-          </Button>
-        </div>
-      )}
     </DemoSection>
   );
 }

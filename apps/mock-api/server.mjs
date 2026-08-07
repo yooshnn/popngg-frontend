@@ -5,10 +5,10 @@ const PREFIX = '/api/v1';
 const ACCESS_TOKEN = 'access_token';
 const WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 
-const MOCK_USER = { id: 'u_1', name: 'くぴゃ' };
+const MOCK_USER = { id: '2459-4102-3156', name: 'くぴゃ' };
 const LOGGED_OUT = { user: null, role: null };
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Routes are keyed by `METHOD PATH` and return `{ status, headers, data, message }`,
@@ -31,7 +31,7 @@ const routes = {
     };
   },
 
-  [`GET ${PREFIX}/auth/session`]: req => ({
+  [`GET ${PREFIX}/auth/session`]: (req) => ({
     data: getCookie(req, ACCESS_TOKEN)
       ? { user: MOCK_USER, role: 'USER' }
       : LOGGED_OUT,
@@ -120,7 +120,7 @@ function getCookie(req, name) {
   return (
     req.headers.cookie
       ?.split(';')
-      .map(pair => pair.trim().split('='))
+      .map((pair) => pair.trim().split('='))
       .find(([key]) => key === name)?.[1] ?? null
   );
 }

@@ -63,4 +63,32 @@ export default {
     },
     officialSite: '팝픈뮤직 공식 홈페이지',
   },
+  login: {
+    title: '로그인',
+    description: '로그인하고 전체 기능을 이용해보세요.',
+    poptomoId: {
+      label: '팝토모 ID',
+      placeholder: '0000-0000-0000',
+      description: '`－`는 입력하지 않아도 됩니다.',
+    },
+    password: {
+      label: '비밀번호',
+      placeholder: '비밀번호 입력',
+      description: '4~16자의 영문 대소문자와 숫자를 입력하세요.',
+      show: '비밀번호 보기',
+      hide: '비밀번호 숨기기',
+    },
+    rememberId: '팝토모 ID 기억하기',
+    submit: '로그인',
+    register: {
+      prefix: '처음이라면',
+      label: '플레이 데이터 등록하기',
+    },
+    help: {
+      ariaLabel: '로그인 도움말',
+      title: '로그인에 도움이 필요하신가요?',
+      findId: '팝토모 ID 확인',
+      passwordInquiry: '비밀번호 문의',
+    },
+  },
 };

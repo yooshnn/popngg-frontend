@@ -2,7 +2,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@popngg/ui/compon
 import { MenuIcon, XIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router';
-import { Wordmark } from './Wordmark';
+import { Wordmark } from '~/shared/ui';
 
 function desktopLinkClassName({ isActive }: { isActive: boolean }) {
   return `inline-flex h-10 items-center justify-center rounded-md px-3 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stroke-focus-ring ${

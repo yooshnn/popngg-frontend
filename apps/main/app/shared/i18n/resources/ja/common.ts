@@ -63,4 +63,32 @@ export default {
     },
     officialSite: 'ポップンミュージック公式ホームページ',
   },
+  login: {
+    title: 'ログイン',
+    description: 'ログインして、すべての機能をご利用ください。',
+    poptomoId: {
+      label: 'ポプトモID',
+      placeholder: '0000-0000-0000',
+      description: '`－`は必要ありません。',
+    },
+    password: {
+      label: 'パスワード',
+      placeholder: 'パスワードを入力',
+      description: '4〜16文字の半角英数字を入力してください。',
+      show: 'パスワードを表示',
+      hide: 'パスワードを隠す',
+    },
+    rememberId: 'ポプトモIDを記憶する',
+    submit: 'ログイン',
+    register: {
+      prefix: 'はじめての方は',
+      label: 'プレイデータを登録',
+    },
+    help: {
+      ariaLabel: 'ログインヘルプ',
+      title: 'ログインでお困りですか？',
+      findId: 'ポプトモIDを確認',
+      passwordInquiry: 'パスワードのお問い合わせ',
+    },
+  },
 } satisfies typeof import('../ko/common').default;

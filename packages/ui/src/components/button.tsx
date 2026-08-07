@@ -30,6 +30,7 @@ const buttonRecipe = tv({
       sm: 'h-9 text-sm',
       md: 'h-10 text-sm',
       lg: 'h-11 text-base',
+      xl: 'h-12 text-base',
     },
     layout: {
       withText: '',
@@ -44,9 +45,11 @@ const buttonRecipe = tv({
     { layout: 'withText', size: 'sm', class: 'px-3' },
     { layout: 'withText', size: 'md', class: 'px-4' },
     { layout: 'withText', size: 'lg', class: 'px-5' },
+    { layout: 'withText', size: 'xl', class: 'px-6' },
     { layout: 'iconOnly', size: 'sm', class: 'w-9' },
     { layout: 'iconOnly', size: 'md', class: 'w-10' },
     { layout: 'iconOnly', size: 'lg', class: 'w-11' },
+    { layout: 'iconOnly', size: 'xl', class: 'w-12' },
   ],
   defaultVariants: {
     variant: 'neutral-weak',
@@ -77,6 +80,7 @@ const iconStyles = tv({
       sm: 'size-4',
       md: 'size-4',
       lg: 'size-5',
+      xl: 'size-5',
     },
   },
   defaultVariants: {

@@ -4,11 +4,12 @@ import { dehydrate } from '@tanstack/react-query';
 import { env } from 'cloudflare:workers';
 import { getQueryClient, http } from '~/shared/api';
 import { getInstance } from '~/shared/i18n/middleware';
+import { pageTitle } from '~/shared/seo';
 import { ApiDemoSection, ButtonGallerySection, I18nDemoSection, pingQuery, PreferencesDemoSection } from './home.demo';
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
-    { title: loaderData.title },
+    { title: pageTitle(loaderData.title) },
     { name: 'description', content: 'Welcome to React Router!' },
   ];
 }

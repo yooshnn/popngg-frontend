@@ -6,6 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@popngg/ui/components/dropdown-menu';
+import { Skeleton } from '@popngg/ui/components/skeleton';
 import { ChevronDownIcon, LogOutIcon, SquarePenIcon, UserRoundIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
@@ -18,7 +19,12 @@ export function AccountMenu() {
   const { mutate: logout } = useLogout();
 
   if (status === 'pending') {
-    return <div className="h-9" aria-hidden="true" />;
+    return (
+      <div aria-hidden="true" className="flex h-9 items-center gap-2 px-1.5 pr-2">
+        <Skeleton className="size-7 rounded-full" />
+        <Skeleton className="hidden h-3.5 w-14 sm:block" />
+      </div>
+    );
   }
 
   if (status === 'anonymous') {

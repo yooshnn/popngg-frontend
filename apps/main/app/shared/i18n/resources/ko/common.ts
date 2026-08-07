@@ -34,7 +34,7 @@ export default {
     account: {
       menuAriaLabel: '{{name}} 계정 메뉴 열기',
       avatarAriaLabel: '프로필 이미지 미등록',
-      viewProfile: '프로필 보기',
+      viewProfile: '마이페이지',
       editProfile: '프로필 수정',
       logout: '로그아웃',
     },

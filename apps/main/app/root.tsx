@@ -1,4 +1,5 @@
 import type { Route } from './+types/root';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import {
   isRouteErrorResponse,
@@ -8,10 +9,17 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import { getQueryClient } from '~/shared/api';
+import { apiMiddleware } from '~/shared/api/middleware';
 import { i18nextMiddleware } from '~/shared/i18n/middleware';
+import { preferencesCookie, PreferencesProvider } from '~/shared/preferences';
 import './app.css';
 
-export const middleware: Route.MiddlewareFunction[] = [i18nextMiddleware];
+export const middleware: Route.MiddlewareFunction[] = [apiMiddleware, i18nextMiddleware];
+
+export async function loader({ request }: Route.LoaderArgs) {
+  return { preferences: await preferencesCookie.read(request) };
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation();
@@ -34,8 +42,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+export default function App({ loaderData }: Route.ComponentProps) {
+  const queryClient = getQueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <PreferencesProvider preferences={loaderData.preferences}>
+        <Outlet />
+      </PreferencesProvider>
+    </QueryClientProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

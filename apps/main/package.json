@@ -18,8 +18,10 @@
   },
   "dependencies": {
     "@popngg/ui": "workspace:*",
+    "@tanstack/react-query": "catalog:",
     "i18next": "catalog:",
     "isbot": "catalog:",
+    "ky": "catalog:",
     "lucide-react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

@@ -1,0 +1,14 @@
+{
+  "name": "mock-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@popngg/eslint-config": "workspace:*",
+    "eslint": "catalog:"
+  }
+}

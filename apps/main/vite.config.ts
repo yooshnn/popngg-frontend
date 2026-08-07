@@ -13,6 +13,18 @@ export default defineConfig({
     tailwindcss(),
     reactRouter(),
   ],
+  optimizeDeps: {
+    include: [
+      'ky',
+      '@tanstack/react-query',
+      'i18next',
+      'react-i18next',
+      '@popngg/ui > tailwind-variants',
+      '@popngg/ui > tailwind-merge',
+      'lucide-react',
+      'zod',
+    ],
+  },
   environments: {
     ssr: {
       build: {

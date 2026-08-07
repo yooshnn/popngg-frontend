@@ -8,7 +8,9 @@ import { HydrationBoundary, useQuery } from '@tanstack/react-query';
 import { ArrowRightIcon, EllipsisIcon, PlusIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRevalidator } from 'react-router';
+import { Link, useRevalidator } from 'react-router';
+import { useSession } from '~/entities/session';
+import { useLogout } from '~/features/auth';
 import { http } from '~/shared/api';
 import { fallbackLanguage, localeCookie, supportedLanguages } from '~/shared/i18n';
 import { usePreferences } from '~/shared/preferences';
@@ -93,6 +95,43 @@ export function PreferencesDemoSection() {
     <DemoSection title="preferences">
       <TrackName />
       <TitleToggle />
+    </DemoSection>
+  );
+}
+
+// auth
+
+export function AuthDemoSection() {
+  const { status, session } = useSession();
+  const { mutate: logout, isPending: isLoggingOut } = useLogout();
+
+  return (
+    <DemoSection title="auth">
+      {status === 'pending' && <p className="text-fg-neutral-subtle">…</p>}
+
+      {status === 'anonymous' && (
+        <Link className={buttonStyles({ variant: 'brand-outline' })} to="/login">
+          로그인
+        </Link>
+      )}
+
+      {status === 'authenticated' && (
+        <div className="flex w-fit items-center gap-3">
+          <p>
+            {session.name}
+            {' · '}
+            <span className="text-fg-neutral-subtle">{session.role}</span>
+          </p>
+          <Button
+            variant="neutral-outline"
+            size="sm"
+            loading={isLoggingOut}
+            onClick={() => logout()}
+          >
+            로그아웃
+          </Button>
+        </div>
+      )}
     </DemoSection>
   );
 }

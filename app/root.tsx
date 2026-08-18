@@ -13,9 +13,14 @@ import {
 import { getQueryClient } from './shared/api';
 import { apiMiddleware } from './shared/api/middleware.server';
 import { i18nextMiddleware } from './shared/i18n/middleware.server';
+import { preferencesCookie, PreferencesProvider } from './shared/preferences';
 import './app.css';
 
 export const middleware = [apiMiddleware, i18nextMiddleware];
+
+export async function loader({ request }: Route.LoaderArgs) {
+  return { preferences: await preferencesCookie.read(request) };
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation();
@@ -37,12 +42,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function App({ loaderData }: Route.ComponentProps) {
   const queryClient = getQueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <PreferencesProvider initialPreferences={loaderData.preferences}>
+        <Outlet />
+      </PreferencesProvider>
     </QueryClientProvider>
   );
 }

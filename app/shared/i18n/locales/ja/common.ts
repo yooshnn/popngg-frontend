@@ -6,6 +6,57 @@ type TranslationShape<T> = {
 
 const common = {
   demo: 'ポップン',
+  header: {
+    account: {
+      logout: 'ログアウト',
+      settings: '設定',
+      viewProfile: 'マイページ',
+    },
+    localeToggle: {
+      ko: '韓国語',
+      ja: '日本語',
+    },
+    login: 'ログイン',
+    menu: {
+      close: 'メニューを閉じる',
+      guide: 'ガイド',
+      helpLabel: 'ヘルプ',
+      navLabel: 'ナビゲーション',
+      open: 'メニューを開く',
+      register: 'データ登録',
+    },
+    titleToggle: {
+      song: '曲名',
+      genre: 'ジャンル',
+    },
+  },
+  nav: {
+    chart: '譜面',
+    tool: 'ツール',
+    user: 'ユーザー',
+  },
+  footer: {
+    groups: {
+      content: {
+        title: 'コンテンツ',
+        chart: '譜面',
+        user: 'ユーザー',
+        tool: 'ツール',
+      },
+      link: {
+        title: 'リンク',
+        register: 'データ登録',
+        inquiry: 'お問い合わせ',
+      },
+      doc: {
+        title: 'ドキュメント',
+        guide: 'ガイド',
+        terms: '利用規約',
+        privacy: 'プライバシーポリシー',
+      },
+    },
+    officialSite: 'ポップンミュージック公式ホームページ',
+  },
   login: {
     title: 'ログイン',
     description: 'ログインして、すべての機能をご利用ください。',

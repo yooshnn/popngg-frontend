@@ -18,3 +18,5 @@ export {
 export type {
   Language,
 } from './config';
+
+export { useLanguage } from './use-language';

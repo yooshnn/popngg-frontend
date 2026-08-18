@@ -29,6 +29,18 @@ const common = {
     tool: '도구',
     user: '유저',
   },
+  notFound: {
+    title: '페이지를 찾을 수 없습니다',
+    description: 'URL을 다시 확인해주세요.',
+    back: '뒤로 가기',
+    home: '홈으로',
+  },
+  dataState: {
+    error: {
+      title: '데이터를 불러오지 못했습니다.',
+      description: '잠시 후 다시 시도해주세요.',
+    },
+  },
   footer: {
     groups: {
       content: {

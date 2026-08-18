@@ -1,13 +1,41 @@
 import type { Route } from './+types/route';
-import { Outlet } from 'react-router';
-import { AppFooter } from './ui/app-footer';
-import { AppHeader } from './ui/app-header';
+import { isRouteErrorResponse, Outlet } from 'react-router';
+import { NotFoundPage } from './ui/error/not-found-page';
+import { UnexpectedErrorPage } from './ui/error/unexpected-error-page';
+import { AppFooter } from './ui/shell/app-footer';
+import { AppHeader } from './ui/shell/app-header';
 
-export default function AppRoute(_: Route.ComponentProps) {
+export function meta({ error }: Route.MetaArgs) {
+  if (isRouteErrorResponse(error) && typeof error.data === 'object' && error.data !== null && 'title' in error.data && typeof error.data.title === 'string') {
+    return [{ title: error.data.title }];
+  }
+
+  return [];
+}
+
+export default function AppRoute() {
+  return (
+    <AppChrome>
+      <Outlet />
+    </AppChrome>
+  );
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  const isNotFound = isRouteErrorResponse(error) && error.status === 404;
+
+  return (
+    <AppChrome>
+      {isNotFound ? <NotFoundPage /> : <UnexpectedErrorPage />}
+    </AppChrome>
+  );
+}
+
+function AppChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-svh flex-col bg-bg-layer-default">
       <AppHeader />
-      <Outlet />
+      {children}
       <AppFooter />
     </div>
   );

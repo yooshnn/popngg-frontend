@@ -16,7 +16,22 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return [{ title: loaderData.title }];
+  return loaderData ? [{ title: loaderData.title }] : [];
+}
+
+export function ErrorBoundary() {
+  const { t } = useTranslation();
+
+  return (
+    <main className="mx-auto flex min-h-svh w-full max-w-xl flex-col justify-center px-4 py-12 text-center">
+      <h1 className="text-2xl font-semibold">
+        {t('dataState.error.title')}
+      </h1>
+      <p className="mt-3 text-sm text-fg-neutral-muted">
+        {t('dataState.error.description')}
+      </p>
+    </main>
+  );
 }
 
 export default function LoginRoute({ loaderData }: Route.ComponentProps) {

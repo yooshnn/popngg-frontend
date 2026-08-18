@@ -35,6 +35,18 @@ const common = {
     tool: 'ツール',
     user: 'ユーザー',
   },
+  notFound: {
+    title: 'ページが見つかりません',
+    description: 'URLをご確認ください。',
+    back: '前に戻る',
+    home: 'ホームへ',
+  },
+  dataState: {
+    error: {
+      title: 'データを読み込めませんでした。',
+      description: 'しばらくしてから、もう一度お試しください。',
+    },
+  },
   footer: {
     groups: {
       content: {

@@ -1,17 +1,40 @@
 .DS_Store
+Thumbs.db
 .env
+.env.*
+*.local
 /node_modules/
+.pnpm-store/
 *.tsbuildinfo
+
+# Build Outputs
+/dist/
 
 # React Router
 /.react-router/
 /build/
 
+# Testing
+/coverage/
+
 # Cloudflare
-.mf
-.wrangler
-.dev.vars*
+.mf/
+.wrangler/
+.dev.vars
+.dev.vars.*
 worker-configuration.d.ts
 
 !.dev.vars.example
+!.dev.vars.*.example
 !.env.example
+!.env.*.example
+
+# Cache & Logs
+*.log
+pnpm-debug.log*
+.eslintcache
+__unconfig*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json

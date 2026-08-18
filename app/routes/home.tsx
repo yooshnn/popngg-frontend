@@ -1,19 +1,64 @@
-import { env } from "cloudflare:workers";
+import type { Api } from '../shared/api';
+import type { Route } from './+types/home';
+import { dehydrate, HydrationBoundary, queryOptions, useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
+import { api, getQueryClient } from '../shared/api';
+import { ServerApiContext } from '../shared/api/middleware.server';
 
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+const pingResponseSchema = z.object({
+  message: z.string(),
+  receivedCookie: z.boolean(),
+});
 
-export function meta({}: Route.MetaArgs) {
+function pingQuery(request: Api = api) {
+  return queryOptions({
+    queryKey: ['ping'],
+    queryFn: () => request('ping', pingResponseSchema),
+  });
+}
+
+function pongQuery(request: Api = api) {
+  return queryOptions({
+    queryKey: ['pong'],
+    queryFn: () => request('pong', pingResponseSchema),
+  });
+}
+
+export async function loader({ context }: Route.LoaderArgs) {
+  const queryClient = getQueryClient();
+  const request = context.get(ServerApiContext);
+
+  await queryClient.fetchQuery(pingQuery(request));
+
+  return { dehydratedState: dehydrate(queryClient) };
+}
+
+export function meta() {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: 'New React Router App' },
+    { name: 'description', content: 'Welcome to React Router!' },
   ];
 }
 
-export function loader() {
-  return { message: env.VALUE_FROM_CLOUDFLARE };
+export default function Home({ loaderData }: Route.ComponentProps) {
+  return (
+    <HydrationBoundary state={loaderData.dehydratedState}>
+      <HomeContent />
+    </HydrationBoundary>
+  );
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
-  return <Welcome message={loaderData.message} />;
+function HomeContent() {
+  const { t } = useTranslation();
+  const ping = useQuery(pingQuery());
+  const pong = useQuery(pongQuery());
+
+  return (
+    <main>
+      <h1>{t('demo')}</h1>
+      <p>{ping.data?.message}</p>
+      <p>{pong.data?.message}</p>
+    </main>
+  );
 }

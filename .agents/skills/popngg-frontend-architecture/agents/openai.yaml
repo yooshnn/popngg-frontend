@@ -1,0 +1,4 @@
+interface:
+  display_name: "popn.gg Frontend Architecture"
+  short_description: "Apply popn.gg frontend architecture boundaries"
+  default_prompt: "Use $popngg-frontend-architecture to review this frontend change against our architecture."

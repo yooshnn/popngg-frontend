@@ -1,32 +1,55 @@
 {
 	"name": "popngg-frontend",
 	"private": true,
+	"packageManager": "pnpm@11.14.0",
+	"engines": {
+		"node": "24.14.0"
+	},
 	"type": "module",
 	"scripts": {
 		"build": "react-router build",
-		"dev": "react-router dev",
+		"build:dev": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=dev react-router build --mode dev",
+		"build:prod": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=prod react-router build --mode prod",
+		"dev": "COMMIT_SHA=$(git rev-parse --short HEAD) CLOUDFLARE_ENV=dev react-router dev",
+		"dev:mock": "node tools/mock-api/server.mjs",
+		"lint": "eslint . --max-warnings 0",
+		"lint:fix": "eslint . --fix",
+		"test": "pnpm run test:unit",
+		"test:unit": "vitest run",
 		"typecheck": "wrangler types && react-router typegen && tsc -b",
-		"deploy": "pnpm run build && wrangler deploy",
-		"preview": "pnpm run build && vite preview",
+		"deploy:dev": "pnpm run build:dev && wrangler deploy --env dev",
+		"deploy:prod": "pnpm run build:prod && wrangler deploy --env prod",
+		"preview": "pnpm run build:dev && vite preview",
 		"cf-typegen": "wrangler types",
 		"postinstall": "wrangler types"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.101.3",
+		"i18next": "^26.3.6",
 		"isbot": "^5.1.36",
+		"ky": "^2.0.2",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
-		"react-router": "^8"
+		"react-i18next": "^17.0.11",
+		"react-router": "^8",
+		"remix-i18next": "^8.0.0",
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
+		"@antfu/eslint-config": "9.2.0",
 		"@cloudflare/vite-plugin": "^1.52.1",
+		"@eslint-react/eslint-plugin": "5.18.1",
 		"@react-router/dev": "^8",
 		"@tailwindcss/vite": "^4.2.2",
 		"@types/node": "^22",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
+		"eslint": "10.8.0",
+		"eslint-plugin-react-refresh": "0.5.3",
 		"tailwindcss": "^4.2.2",
 		"typescript": "^5.9.3",
 		"vite": "^8.0.3",
+		"vitest": "^4.1.10",
 		"wrangler": "^4.123.0"
 	}
 }

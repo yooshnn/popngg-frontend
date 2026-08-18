@@ -31,10 +31,12 @@
 ## 기본 의존성 방향
 
 ```text
-route slice → feature → entity → shared
+route slice → widget → feature → entity → shared
 ```
 
 위 방향을 기본으로 삼는다. 같은 레이어의 슬라이스끼리 직접 의존하지 않으며, 순환 의존성은 허용하지 않는다.
+
+`widget`은 여러 route가 공유하는 완성형 화면 영역을 조합하는 예외적인 상위 레이어다. 공용 UI와 feature를 조합할 수 있지만 route slice를 import하지 않으며, 구체적인 URL·문구·화면 데이터는 호출부가 전달한다. 재사용 가능한 상호작용이나 도메인 규칙 자체를 widget에 넣지 않는다.
 
 다만 이 규칙은 금지 목록이 아니라 기본값이다. 작은 코드가 한 화면에서만 쓰이고 별도 레이어를 만들면 오히려 읽기 어려워진다면 route slice 안에 둔다. 반대로 실제 두 번째 소비처가 생기면 그때 가장 낮은 적절한 레이어로 승격한다.
 
@@ -84,6 +86,8 @@ app/
 ├── features/
 │   ├── auth/
 │   └── table/
+├── widgets/
+│   └── focus-header/          # 여러 독립 route가 공유하는 화면 영역
 ├── entities/
 │   ├── user/
 │   ├── medal/
@@ -296,8 +300,9 @@ API request
 
 1. 한 route에서만 쓰이면 route slice에 둔다.
 2. 두 route에서 같은 사용자 동작을 공유하면 feature로 승격한다.
-3. 여러 기능이 같은 서비스 개념과 규칙을 공유하면 entity로 승격한다.
-4. popn.gg의 도메인을 몰라도 재사용 가능한 인프라만 shared로 승격한다.
+3. 여러 route가 같은 완성형 화면 영역을 공유하면 widget으로 조합한다.
+4. 여러 기능이 같은 서비스 개념과 규칙을 공유하면 entity로 승격한다.
+5. popn.gg의 도메인을 몰라도 재사용 가능한 인프라만 shared로 승격한다.
 
 예외를 허용하되 다음 두 조건은 지킨다.
 
@@ -314,6 +319,7 @@ API request
 - `model/`: 상태, 타입, 변환 결과
 - `api/`: 서버 계약과 query/mutation
 - `lib/`: 해당 slice의 순수 helper
+- `widgets/`: 여러 route가 공유하는 완성형 화면 영역의 조합
 
 브랜드 디자인 시스템은 단일 앱 안의 `shared/ui`로 이동한다. 다만 `shared/ui`는 라우팅·i18n·도메인 데이터를 소유하지 않는다. 링크 대상과 번역은 호출부가 정한다.
 
@@ -331,10 +337,10 @@ API request
 
 ## 의존성 경계 검증
 
-폴더 이름만으로는 `route slice → feature → entity → shared` 규칙을 강제할 수 없다. 문서는 배치 판단의 기준으로 사용하고, 구조가 형성된 뒤에는 다음 실패를 정적 검사와 빌드에서 차단한다.
+폴더 이름만으로는 `route slice → widget → feature → entity → shared` 규칙을 강제할 수 없다. 문서는 배치 판단의 기준으로 사용하고, 구조가 형성된 뒤에는 다음 실패를 정적 검사와 빌드에서 차단한다.
 
 - `.server` module이 클라이언트 import graph에 포함되는 경우
-- `shared → entity/feature/route`, `entity → feature/route`, `feature → route`처럼 의존 방향이 역전되는 경우
+- `shared → entity/feature/widget/route`, `entity → feature/widget/route`, `feature → widget/route`, `widget → route`처럼 의존 방향이 역전되는 경우
 - 서로 다른 route slice가 상대 slice의 내부 파일을 직접 import하는 경우
 - 같은 레이어의 slice끼리 직접 의존하거나 순환 의존성이 생기는 경우
 - 허용된 server module 밖에서 `cloudflare:workers`를 직접 import하는 경우
@@ -352,12 +358,12 @@ API request
 
 ## 새 코드를 추가할 때의 짧은 체크리스트
 
-1. 이 코드는 특정 URL의 화면인가, 여러 화면의 사용자 동작인가, 도메인 개념인가?
+1. 이 코드는 특정 URL의 화면인가, 여러 화면의 사용자 동작인가, 여러 route가 공유하는 완성형 화면 영역인가, 도메인 개념인가?
 2. 가장 구체적인 route slice에서 시작할 수 있는가?
 3. 서버 DTO와 화면 domain 타입을 분리했는가?
 4. URL 상태의 소유자가 하나로 정해졌는가?
 5. 두 번째 소비처가 실제로 생겼을 때만 아래 레이어로 승격했는가?
-6. route/feature/entity/shared 사이에 순환이나 책임 역전이 없는가?
+6. route/widget/feature/entity/shared 사이에 순환이나 책임 역전이 없는가?
 7. Cloudflare binding과 secret 접근이 server module 안에 있고, 반환 값은 클라이언트에 안전한가?
 8. 현재 단계에서 요구하는 build/typecheck/의존성 경계 검사를 통과하는가?
 

@@ -3,6 +3,8 @@
 @import './shared/ui/theme/tokens.css';
 @source '.';
 
+@custom-variant disabled-idle (&[data-disabled]:not([data-loading]));
+
 @layer base {
   :root {
     color-scheme: light;

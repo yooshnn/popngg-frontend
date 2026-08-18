@@ -1,6 +1,12 @@
+import { UserRoundIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { passwordPattern, poptomoIdPattern, useLogin } from '~/features/auth';
+import { Button } from '~/shared/ui/button';
+import { Checkbox } from '~/shared/ui/checkbox';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '~/shared/ui/field';
+import { Input } from '~/shared/ui/input';
+import { PasswordField } from './password-field';
 
 function formatPoptomoId(value: string) {
   return value
@@ -35,73 +41,58 @@ export function LoginForm({ defaultPoptomoId, redirectTo }: LoginFormProps) {
   }
 
   return (
-    <form aria-busy={isPending} className="mt-6 space-y-5" onSubmit={handleSubmit}>
-      <div className="space-y-1.5">
-        <label className="block text-sm" htmlFor="login-poptomo-id">
-          {t('login.poptomoId.label')}
-        </label>
-        <input
-          aria-describedby="login-poptomo-id-description"
-          autoComplete="username"
-          className="block w-full rounded border border-stroke-neutral-weak bg-bg-layer-default px-3 py-2 text-base outline-none focus:border-stroke-focus-ring focus:ring-1 focus:ring-stroke-focus-ring disabled:bg-bg-disabled"
-          disabled={isPending}
-          id="login-poptomo-id"
-          inputMode="numeric"
-          placeholder={t('login.poptomoId.placeholder')}
-          required
-          value={poptomoId}
-          onChange={event => setPoptomoId(formatPoptomoId(event.target.value))}
-        />
-        <p className="text-xs text-fg-neutral-subtle" id="login-poptomo-id-description">
-          {t('login.poptomoId.description')}
-        </p>
-      </div>
+    <form aria-busy={isPending} className="mt-9" onSubmit={handleSubmit}>
+      <FieldGroup className="gap-6">
+        <Field className="gap-2">
+          <FieldLabel htmlFor="login-poptomo-id" variant="legend">
+            {t('login.poptomoId.label')}
+          </FieldLabel>
+          <Input
+            aria-describedby="login-poptomo-id-description"
+            autoComplete="username"
+            disabled={isPending}
+            id="login-poptomo-id"
+            inputMode="numeric"
+            placeholder={t('login.poptomoId.placeholder')}
+            prefixIcon={<UserRoundIcon className={isPoptomoIdFilled ? 'text-fg-brand' : undefined} />}
+            required
+            value={poptomoId}
+            onChange={event => setPoptomoId(formatPoptomoId(event.target.value))}
+          />
+          <FieldDescription id="login-poptomo-id-description">
+            {t('login.poptomoId.description')}
+          </FieldDescription>
+        </Field>
 
-      <div className="space-y-1.5">
-        <label className="block text-sm" htmlFor="login-password">
-          {t('login.password.label')}
-        </label>
-        <input
-          aria-describedby="login-password-description"
+        <PasswordField
           autoComplete="current-password"
-          className="block w-full rounded border border-stroke-neutral-weak bg-bg-layer-default px-3 py-2 text-base outline-none focus:border-stroke-focus-ring focus:ring-1 focus:ring-stroke-focus-ring disabled:bg-bg-disabled"
+          description={t('login.password.description')}
           disabled={isPending}
           id="login-password"
+          label={t('login.password.label')}
           placeholder={t('login.password.placeholder')}
-          required
-          type="password"
           value={password}
-          onChange={event => setPassword(event.target.value)}
+          onValueChange={setPassword}
         />
-        <p className="text-xs text-fg-neutral-subtle" id="login-password-description">
-          {t('login.password.description')}
-        </p>
-      </div>
+      </FieldGroup>
 
-      <label className="flex w-fit items-center gap-2 text-sm text-fg-neutral-muted">
-        <input
-          checked={remember}
-          className="size-4"
-          disabled={isPending}
-          type="checkbox"
-          onChange={event => setRemember(event.target.checked)}
-        />
+      <Checkbox checked={remember} className="mt-5 w-fit gap-2.5" disabled={isPending} onCheckedChange={setRemember}>
         {t('login.rememberId')}
-      </label>
+      </Checkbox>
 
-      <button
-        className="w-full rounded bg-bg-brand-solid px-4 py-2.5 font-medium text-fg-neutral-inverted hover:bg-bg-brand-solid-hover focus:outline-none focus:ring-2 focus:ring-stroke-focus-ring disabled:cursor-not-allowed disabled:bg-bg-disabled disabled:text-fg-disabled"
-        disabled={!isPoptomoIdFilled || !isPasswordFilled || isPending}
+      <Button
+        className="mt-8"
+        disabled={!isPoptomoIdFilled || !isPasswordFilled}
+        loading={isPending}
+        size="xl"
         type="submit"
+        variant="brand-solid"
+        width="full"
       >
-        {isPending ? t('login.submitting') : t('login.submit')}
-      </button>
+        {t('login.submit')}
+      </Button>
 
-      {error && (
-        <p className="text-sm text-fg-critical" role="alert">
-          {error.message}
-        </p>
-      )}
+      <FieldError className="mt-3 px-1">{error?.message}</FieldError>
     </form>
   );
 }

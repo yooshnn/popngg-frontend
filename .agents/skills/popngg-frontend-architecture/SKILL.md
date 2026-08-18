@@ -13,7 +13,7 @@ Use the architecture reference as a decision guide, not as a mechanical folder m
 2. Inspect the current app structure, `package.json`, `react-router.config.ts`, `app/routes.ts`, and the files directly involved in the task.
 3. Confirm the installed React Router mode and version before applying route, loader, action, middleware, or deployment advice.
 4. Keep route-specific UI, state, and server integration together until a real second consumer justifies promotion.
-5. Enforce dependencies in the direction `route slice -> feature -> entity -> shared`; reject same-layer slice imports and cycles.
+5. Enforce dependencies in the direction `route slice -> widget -> feature -> entity -> shared`; reject same-layer slice imports and cycles.
 6. Convert wire DTOs inside an `api` boundary and expose domain-oriented values to loaders and UI.
 7. Keep Cloudflare bindings, secrets, and server runtime APIs behind `.server` modules; do not let browser-capable query functions depend on them.
 8. Keep features independent of page-specific URLs and layouts. Keep entities limited to reusable domain concepts and rules.

@@ -81,10 +81,20 @@ const common = {
       label: 'パスワード',
       placeholder: 'パスワードを入力',
       description: '4〜16文字の半角英数字を入力してください。',
+      show: 'パスワードを表示',
+      hide: 'パスワードを隠す',
     },
     rememberId: 'ポプトモIDを記憶する',
     submit: 'ログイン',
-    submitting: 'ログイン中…',
+    register: {
+      prefix: 'はじめての方は',
+      label: 'プレイデータを登録',
+    },
+    help: {
+      title: 'ログインでお困りですか？',
+      findId: 'ポプトモIDを確認',
+      passwordInquiry: 'パスワードのお問い合わせ',
+    },
   },
 } as const satisfies TranslationShape<typeof koCommon>;
 

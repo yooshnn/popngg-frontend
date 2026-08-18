@@ -75,10 +75,20 @@ const common = {
       label: '비밀번호',
       placeholder: '비밀번호 입력',
       description: '4~16자의 영문 대소문자와 숫자를 입력하세요.',
+      show: '비밀번호 보기',
+      hide: '비밀번호 숨기기',
     },
     rememberId: '팝토모 ID 기억하기',
     submit: '로그인',
-    submitting: '로그인 중…',
+    register: {
+      prefix: '처음이라면',
+      label: '플레이 데이터 등록하기',
+    },
+    help: {
+      title: '로그인에 도움이 필요하신가요?',
+      findId: '팝토모 ID 확인',
+      passwordInquiry: '비밀번호 문의',
+    },
   },
 } as const;
 

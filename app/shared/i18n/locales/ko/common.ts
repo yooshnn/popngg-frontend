@@ -123,6 +123,51 @@ const common = {
       passwordInquiry: '비밀번호 문의',
     },
   },
+  medal: {
+    name: {
+      'gold-star': '금★',
+      'silver-star': '은★',
+      'silver-diamond': '은◆',
+      'silver-circle': '은●',
+      'bronze-star': '동★',
+      'bronze-diamond': '동◆',
+      'bronze-circle': '동●',
+      'easy': 'EASY',
+      'long-off': '롱OFF',
+      'black-star': '흑★',
+      'black-diamond': '흑◆',
+      'black-circle': '흑●',
+      'none': '없음',
+    },
+    clearType: {
+      'perfect': '퍼펙트',
+      'full-combo': '풀콤보',
+      'clear': '클리어',
+      'assist': '어시스트',
+      'failed': '미클리어',
+    },
+  },
+  user: {
+    profile: {
+      updatedAt: '{{date}} 갱신',
+      popnClass: {
+        label: '팝픈클래스',
+        shortLabel: '팝클',
+        legacyPrefix: '/ 구',
+      },
+    },
+    tab: {
+      home: {
+        label: '홈',
+      },
+      records: {
+        label: '플레이 데이터',
+      },
+      progress: {
+        label: '순회',
+      },
+    },
+  },
 } as const;
 
 export default common;

@@ -129,6 +129,51 @@ const common = {
       passwordInquiry: 'パスワードのお問い合わせ',
     },
   },
+  medal: {
+    name: {
+      'gold-star': '金★',
+      'silver-star': '銀★',
+      'silver-diamond': '銀◆',
+      'silver-circle': '銀●',
+      'bronze-star': '銅★',
+      'bronze-diamond': '銅◆',
+      'bronze-circle': '銅●',
+      'easy': 'EASY',
+      'long-off': 'ロングOFF',
+      'black-star': '黒★',
+      'black-diamond': '黒◆',
+      'black-circle': '黒●',
+      'none': 'なし',
+    },
+    clearType: {
+      'perfect': 'パフェ',
+      'full-combo': 'フルコン',
+      'clear': 'クリア',
+      'assist': 'アシスト',
+      'failed': '未クリア',
+    },
+  },
+  user: {
+    profile: {
+      updatedAt: '{{date}} 更新',
+      popnClass: {
+        label: 'ポップンクラス',
+        shortLabel: 'ポックラ',
+        legacyPrefix: '/ 旧',
+      },
+    },
+    tab: {
+      home: {
+        label: 'ホーム',
+      },
+      records: {
+        label: 'プレーデータ',
+      },
+      progress: {
+        label: '埋め',
+      },
+    },
+  },
 } as const satisfies TranslationShape<typeof koCommon>;
 
 export default common;

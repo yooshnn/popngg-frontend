@@ -8,6 +8,21 @@ const SESSION = {
   userName: 'popn.gg',
   avatarUrl: null,
 };
+const USER_PROFILE = {
+  id: SESSION.poptomoId,
+  name: SESSION.userName,
+  avatarUrl: null,
+  character: '和泉一舞',
+  comment: '「スコアよりクリアメダル優先」',
+  popnClass: 17800,
+  legacyPopnClass: 9850,
+  medalSummaries: [
+    { kind: 'clear', maxLevel: 50, achieved: 520, total: 1240 },
+    { kind: 'full-combo', maxLevel: 49, achieved: 142, total: 1240 },
+    { kind: 'perfect', maxLevel: 48, achieved: 24, total: 1240 },
+  ],
+  updatedAt: '2026-07-29T04:12:00.000Z',
+};
 
 const server = createServer((request, response) => {
   const origin = request.headers.origin ?? 'http://localhost:5173';
@@ -53,6 +68,35 @@ const server = createServer((request, response) => {
     sendJson(response, 200, {
       code: 'SUCCESS',
       data: request.headers.cookie?.includes(`${SESSION_COOKIE}=1`) ? SESSION : null,
+      message: 'The request is successful.',
+    });
+    return;
+  }
+
+  if (request.method === 'GET' && url.pathname.startsWith('/api/v1/users/')) {
+    const userId = url.pathname.slice('/api/v1/users/'.length);
+
+    if (userId === '0000-0000-0404') {
+      sendJson(response, 404, {
+        code: 'NOT_FOUND',
+        data: null,
+        message: `${userId} 유저를 찾을 수 없습니다.`,
+      });
+      return;
+    }
+
+    if (userId === '0000-0000-0403') {
+      sendJson(response, 403, {
+        code: 'FORBIDDEN',
+        data: null,
+        message: '이 프로필을 볼 권한이 없습니다.',
+      });
+      return;
+    }
+
+    sendJson(response, 200, {
+      code: 'SUCCESS',
+      data: USER_PROFILE,
       message: 'The request is successful.',
     });
     return;

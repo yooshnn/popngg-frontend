@@ -1,0 +1,25 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="m0_dB" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="4" width="58" height="58">
+<circle cx="32" cy="33" r="29" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#m0_dB)">
+<rect width="64" height="64" fill="url(#g0_dB)"/>
+</g>
+<mask id="m1_dB" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="58" height="58">
+<circle cx="32" cy="32" r="29" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#m1_dB)">
+<rect width="64" height="64" fill="url(#g1_dB)"/>
+<circle cx="32" cy="32" r="22.5" stroke="#03B75D" stroke-width="6"/>
+<circle cx="32" cy="32" r="18.5" fill="white"/>
+<g transform="translate(4.48 4.62) scale(0.86)"><path d="M32 38 Q33.42 19.13 14.5 19.5 Q13.08 38.37 32 38 Z" fill="#03B75D"/><path d="M32 46 C32 47 32 44 32 31" stroke="#017A3E" stroke-width="3.2" stroke-linecap="round"/><path d="M32 38 Q50.92 38.37 49.5 19.5 Q30.58 19.13 32 38 Z" fill="#017A3E"/></g>
+</g>
+<defs>
+<linearGradient id="g0_dB" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C9B400"/><stop offset="1" stop-color="#8A7500"/>
+</linearGradient>
+<linearGradient id="g1_dB" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFFCCD"/><stop offset="1" stop-color="#FFF254"/>
+</linearGradient>
+</defs>
+</svg>

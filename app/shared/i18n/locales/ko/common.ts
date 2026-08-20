@@ -36,9 +36,42 @@ const common = {
     home: '홈으로',
   },
   dataState: {
+    loading: '데이터를 불러오는 중입니다.',
+    empty: '표시할 데이터가 없습니다.',
     error: {
       title: '데이터를 불러오지 못했습니다.',
       description: '잠시 후 다시 시도해주세요.',
+      retry: '다시 시도',
+    },
+  },
+  dataTable: {
+    search: {
+      label: '검색',
+      placeholder: '검색어를 입력하세요',
+    },
+    filter: {
+      trigger: '필터',
+      close: '필터 닫기',
+      clear: '필터 초기화',
+      reset: '초기화',
+      apply: '적용',
+    },
+    sort: {
+      label: '정렬',
+      toAscending: '오름차순으로 변경',
+      toDescending: '내림차순으로 변경',
+    },
+    empty: '0건',
+    range: '# {{from}}–{{to}} / {{total}}건',
+    pagination: {
+      navigation: '페이지 이동',
+      first: '첫 페이지',
+      previous: '이전 페이지',
+      next: '다음 페이지',
+      last: '마지막 페이지',
+      current: '{{page}} / {{total}} 페이지',
+      pageSize: '페이지당 표시 개수',
+      pageSizeOption: '{{size}}개씩',
     },
   },
   footer: {

@@ -1,6 +1,7 @@
 import type { Route } from './+types/root';
 
 import { QueryClientProvider } from '@tanstack/react-query';
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v8';
 import { useTranslation } from 'react-i18next';
 import {
   isRouteErrorResponse,
@@ -47,9 +48,11 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PreferencesProvider initialPreferences={loaderData.preferences}>
-        <Outlet />
-      </PreferencesProvider>
+      <NuqsAdapter>
+        <PreferencesProvider initialPreferences={loaderData.preferences}>
+          <Outlet />
+        </PreferencesProvider>
+      </NuqsAdapter>
     </QueryClientProvider>
   );
 }

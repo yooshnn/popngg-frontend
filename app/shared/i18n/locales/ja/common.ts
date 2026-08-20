@@ -42,9 +42,42 @@ const common = {
     home: 'ホームへ',
   },
   dataState: {
+    loading: 'データを読み込んでいます。',
+    empty: '表示するデータがありません。',
     error: {
       title: 'データを読み込めませんでした。',
       description: 'しばらくしてから、もう一度お試しください。',
+      retry: '再試行',
+    },
+  },
+  dataTable: {
+    search: {
+      label: '検索',
+      placeholder: '検索ワードを入力',
+    },
+    filter: {
+      trigger: 'フィルター',
+      close: 'フィルターを閉じる',
+      clear: 'フィルターをリセット',
+      reset: 'リセット',
+      apply: '適用',
+    },
+    sort: {
+      label: '並び順',
+      toAscending: '昇順に変更',
+      toDescending: '降順に変更',
+    },
+    empty: '0件',
+    range: '# {{from}}–{{to}} / {{total}}件',
+    pagination: {
+      navigation: 'ページ送り',
+      first: '最初のページ',
+      previous: '前のページ',
+      next: '次のページ',
+      last: '最後のページ',
+      current: '{{page}} / {{total}}ページ',
+      pageSize: 'ページあたりの表示件数',
+      pageSizeOption: '{{size}}件ずつ',
     },
   },
   footer: {

@@ -6,3 +6,4 @@ export type {
 } from './config';
 
 export { PreferencesProvider, usePreferences } from './provider';
+export { useTitles } from './use-titles';

@@ -1,3 +1,5 @@
+import type { UseQueryResult } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
 import { LoaderCircleIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '~/shared/ui/button';
@@ -43,4 +45,36 @@ export function EmptyState() {
       {t('dataState.empty')}
     </div>
   );
+}
+
+export interface QueryStateProps<Data> {
+  children: (data: Data) => ReactNode;
+  error?: (state: ErrorStateProps) => ReactNode;
+  isEmpty?: (data: Data) => boolean;
+  pending?: ReactNode;
+  query: UseQueryResult<Data>;
+}
+
+/** Renders the shared pending, error, and empty states around a query result. */
+export function QueryState<Data>({
+  children,
+  error = state => <ErrorState {...state} />,
+  isEmpty,
+  pending = <LoadingState />,
+  query,
+}: QueryStateProps<Data>) {
+  if (query.isPending)
+    return pending;
+
+  if (query.data === undefined) {
+    return error({
+      retrying: query.isFetching,
+      onRetry: () => void query.refetch(),
+    });
+  }
+
+  if (isEmpty?.(query.data))
+    return <EmptyState />;
+
+  return children(query.data);
 }

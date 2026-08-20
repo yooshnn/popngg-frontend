@@ -147,6 +147,31 @@ const common = {
       'failed': '미클리어',
     },
   },
+  rank: {
+    name: {
+      'S+': 'S+',
+      'S': 'S',
+      'AAA': 'AAA',
+      'AA+': 'AA+',
+      'AA': 'AA',
+      'A+': 'A+',
+      'A': 'A',
+      'B+': 'B+',
+      'B': 'B',
+      'C': 'C',
+      'D': 'D',
+      'E': 'E',
+      'none': '없음',
+    },
+    family: {
+      S: 'S',
+      AAA: 'AAA',
+      AA: 'AA',
+      A: 'A',
+      B: 'B',
+      belowB: 'B 미만',
+    },
+  },
   user: {
     profile: {
       updatedAt: '{{date}} 갱신',
@@ -165,6 +190,40 @@ const common = {
       },
       progress: {
         label: '순회',
+      },
+    },
+    home: {
+      popnClassTargets: {
+        title: '팝클 대상곡',
+        description: '팝픈클래스 산정에 반영되는 대상곡입니다.',
+        calculation: {
+          label: '팝픈클래스 계산식',
+          current: '현행식',
+          legacy: '구 계산식',
+        },
+        group: {
+          newSongs: '신곡',
+          oldSongs: '구곡',
+          legacy: '대상곡',
+        },
+        songCount: '{{count}}곡',
+        average: '평균 {{value}}',
+        empty: '아직 해당하는 기록이 없습니다.',
+      },
+      levelStats: {
+        title: '피자',
+        description: '레벨별 메달과 스코어 랭크 분포를 확인할 수 있습니다.',
+        mode: {
+          label: '집계 유형',
+          medal: '메달',
+          rank: '랭크',
+        },
+        level: {
+          previous: '이전 레벨',
+          next: '다음 레벨',
+        },
+        totalLabel: '전체 채보',
+        chartLabel: '레벨 {{level}} {{mode}} 분포, 전체 {{count}}채보',
       },
     },
   },

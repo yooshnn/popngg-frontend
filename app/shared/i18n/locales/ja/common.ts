@@ -153,6 +153,31 @@ const common = {
       'failed': '未クリア',
     },
   },
+  rank: {
+    name: {
+      'S+': 'S+',
+      'S': 'S',
+      'AAA': 'AAA',
+      'AA+': 'AA+',
+      'AA': 'AA',
+      'A+': 'A+',
+      'A': 'A',
+      'B+': 'B+',
+      'B': 'B',
+      'C': 'C',
+      'D': 'D',
+      'E': 'E',
+      'none': 'なし',
+    },
+    family: {
+      S: 'S',
+      AAA: 'AAA',
+      AA: 'AA',
+      A: 'A',
+      B: 'B',
+      belowB: 'B未満',
+    },
+  },
   user: {
     profile: {
       updatedAt: '{{date}} 更新',
@@ -171,6 +196,40 @@ const common = {
       },
       progress: {
         label: '埋め',
+      },
+    },
+    home: {
+      popnClassTargets: {
+        title: 'ポックラ対象曲',
+        description: 'ポップンクラスの計算対象となる楽曲です。',
+        calculation: {
+          label: 'ポップンクラスの計算式',
+          current: '現行式',
+          legacy: '旧計算式',
+        },
+        group: {
+          newSongs: '新曲',
+          oldSongs: '旧曲',
+          legacy: '対象曲',
+        },
+        songCount: '{{count}}曲',
+        average: '平均 {{value}}',
+        empty: 'まだ該当する記録がありません。',
+      },
+      levelStats: {
+        title: '円グラフ',
+        description: 'レベルごとのメダルとスコアランクの分布を確認できます。',
+        mode: {
+          label: '集計タイプ',
+          medal: 'メダル',
+          rank: 'ランク',
+        },
+        level: {
+          previous: '前のレベル',
+          next: '次のレベル',
+        },
+        totalLabel: '全譜面',
+        chartLabel: 'レベル{{level}}の{{mode}}分布、全{{count}}譜面',
       },
     },
   },

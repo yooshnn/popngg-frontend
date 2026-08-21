@@ -505,6 +505,31 @@ const common = {
       none: '-',
     },
   },
+  charts: {
+    title: '채보 목록',
+    description: '팝픈뮤직에 수록된 곡과 채보를 확인해보세요.',
+    search: {
+      placeholder: '곡명·장르 검색',
+    },
+    sort: {
+      version: '버전',
+      title: '곡명',
+      genre: '장르',
+      maxLevel: '최고 레벨',
+    },
+    filter: {
+      chartInfo: '곡 정보',
+    },
+  },
+  chart: {
+    comingSoon: '곡 상세 정보는 준비 중입니다.',
+    difficultyNavigation: '난이도 이동',
+    tabs: {
+      label: '채보 상세 메뉴',
+      overview: '개요',
+      ranking: '랭킹',
+    },
+  },
 } as const;
 
 export default common;

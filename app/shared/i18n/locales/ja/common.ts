@@ -511,6 +511,31 @@ const common = {
       none: '-',
     },
   },
+  charts: {
+    title: '譜面リスト',
+    description: 'ポップンミュージックに収録されている曲と譜面を確認できます。',
+    search: {
+      placeholder: '曲名・ジャンルを検索',
+    },
+    sort: {
+      version: 'バージョン',
+      title: '曲名',
+      genre: 'ジャンル',
+      maxLevel: '最高レベル',
+    },
+    filter: {
+      chartInfo: '楽曲情報',
+    },
+  },
+  chart: {
+    comingSoon: '楽曲の詳細情報は準備中です。',
+    difficultyNavigation: '難易度を移動',
+    tabs: {
+      label: '譜面詳細メニュー',
+      overview: '概要',
+      ranking: 'ランキング',
+    },
+  },
 } as const satisfies TranslationShape<typeof koCommon>;
 
 export default common;

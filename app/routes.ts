@@ -11,6 +11,11 @@ export default [
     ]),
     route('renew', 'routes/renew/route.tsx'),
     route('users', 'routes/users/route.tsx'),
+    route('charts', 'routes/charts/route.tsx'),
+    route('chart/:songHash/:difficulty', 'routes/chart/route.tsx', [
+      index('routes/chart.overview/route.tsx'),
+      route('ranking', 'routes/chart.ranking/route.tsx'),
+    ]),
     route('*', 'routes/not-found/route.tsx'),
   ]),
   { path: 'login', file: 'routes/login/route.tsx' },

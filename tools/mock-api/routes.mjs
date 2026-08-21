@@ -1,4 +1,5 @@
 import { resolveBanner } from './banners.mjs';
+import { getChart, getCharts, InvalidChartsQueryError } from './charts.mjs';
 import {
   LEGACY_TARGETS,
   LEVEL_STATS,
@@ -18,6 +19,8 @@ import { getUsers, InvalidUsersQueryError } from './users.mjs';
 export const routes = [
   { method: 'GET', pattern: /^\/api\/v1\/auth\/session$/, handle: handleSession },
   { method: 'GET', pattern: /^\/api\/v1\/users$/, handle: handleUsers },
+  { method: 'GET', pattern: /^\/api\/v1\/charts$/, handle: handleCharts },
+  { method: 'GET', pattern: /^\/api\/v1\/charts\/([^/]+)$/, handle: handleChart },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/popn-class-targets\/(current|legacy)$/, handle: handleTargets },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/level-stats$/, handle: handleLevelStats },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/records$/, handle: handleRecords },
@@ -52,6 +55,44 @@ function handleUsers(request, response) {
     }
     throw error;
   }
+}
+
+function handleCharts(request, response) {
+  const origin = `http://${request.headers.host ?? 'localhost'}`;
+  const params = new URL(request.url ?? '/', origin).searchParams;
+
+  try {
+    const data = getCharts(params);
+    sendJson(response, 200, {
+      code: 'SUCCESS',
+      data: { ...data, items: data.items.map(song => resolveBanner(song, origin)) },
+      message: 'The request is successful.',
+    });
+  }
+  catch (error) {
+    if (error instanceof InvalidChartsQueryError) {
+      sendJson(response, 400, { code: 'BAD_REQUEST', data: null, message: '요청 형식이 올바르지 않습니다.' });
+      return;
+    }
+    throw error;
+  }
+}
+
+function handleChart(request, response, params) {
+  const [songHash] = params;
+  const origin = `http://${request.headers.host ?? 'localhost'}`;
+  const song = getChart(decodeURIComponent(songHash));
+
+  if (!song) {
+    sendJson(response, 404, { code: 'NOT_FOUND', data: null, message: `${songHash} 채보를 찾을 수 없습니다.` });
+    return;
+  }
+
+  sendJson(response, 200, {
+    code: 'SUCCESS',
+    data: resolveBanner(song, origin),
+    message: 'The request is successful.',
+  });
 }
 
 function handleTargets(request, response, params) {

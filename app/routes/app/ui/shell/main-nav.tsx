@@ -18,21 +18,31 @@ function mobileLinkClassName(isActive: boolean) {
   }`;
 }
 
-function useNavItems() {
+interface NavItem {
+  to: string;
+  label: string;
+  activePrefixes: string[];
+}
+
+function useNavItems(): NavItem[] {
   const { t } = useTranslation();
 
   return [
-    { to: '/charts', label: t('nav.chart') },
-    { to: '/users', label: t('nav.user') },
-    { to: '/tools', label: t('nav.tool') },
+    { to: '/charts', label: t('nav.chart'), activePrefixes: ['/charts', '/chart'] },
+    { to: '/users', label: t('nav.user'), activePrefixes: ['/users', '/user'] },
+    { to: '/tools', label: t('nav.tool'), activePrefixes: ['/tools'] },
   ];
 }
 
-function MobileNavLink({ to, label }: { to: string; label: string }) {
+function isNavItemActive(pathname: string, activePrefixes: string[]) {
+  return activePrefixes.some(prefix => pathname === prefix || pathname.startsWith(`${prefix}/`));
+}
+
+function MobileNavLink({ to, label, activePrefixes }: NavItem) {
   const { pathname } = useLocation();
 
   return (
-    <SheetClose className={mobileLinkClassName(pathname === to)} nativeButton={false} render={<NavLink to={to} />}>
+    <SheetClose className={mobileLinkClassName(isNavItemActive(pathname, activePrefixes))} nativeButton={false} render={<NavLink to={to} />}>
       {label}
     </SheetClose>
   );
@@ -53,6 +63,7 @@ function MobileHelpLink({ to, label }: { to: string; label: string }) {
 export function MainNav() {
   const { t } = useTranslation();
   const navItems = useNavItems();
+  const { pathname } = useLocation();
 
   return (
     <div className="flex min-w-0 items-center gap-2 sm:gap-5">
@@ -106,10 +117,10 @@ export function MainNav() {
       <span aria-hidden="true" className="hidden h-5 w-px bg-stroke-neutral-weak sm:block" />
 
       <nav className="hidden items-center gap-0.5 sm:flex">
-        {navItems.map(({ to, label }) => (
-          <NavLink key={to} className={desktopLinkClassName} to={to}>
+        {navItems.map(({ to, label, activePrefixes }) => (
+          <Link key={to} className={desktopLinkClassName({ isActive: isNavItemActive(pathname, activePrefixes) })} to={to}>
             {label}
-          </NavLink>
+          </Link>
         ))}
       </nav>
     </div>

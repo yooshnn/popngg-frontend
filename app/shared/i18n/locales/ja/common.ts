@@ -274,6 +274,38 @@ const common = {
         playInfo: 'プレー情報',
       },
     },
+    progress: {
+      title: '埋め',
+      description: '集計基準ごとのメダルとスコアランクの取得状況を確認します。',
+      axis: {
+        label: '集計基準',
+        level: 'レベル',
+        difficulty: '難易度',
+      },
+      detail: {
+        label: '表示',
+        brief: '簡易',
+        full: '詳細',
+      },
+      table: {
+        medal: 'メダル',
+        rank: 'スコア',
+        caption: {
+          medal: '集計基準ごとのメダル取得状況',
+          rank: '集計基準ごとのスコアランク取得状況',
+        },
+        column: {
+          key: '区分',
+          averageScore: '平均スコア',
+          total: '合計',
+          summary: '全体',
+        },
+        rows: {
+          expand: 'すべて表示',
+          collapse: '折りたたむ',
+        },
+      },
+    },
     home: {
       popnClassTargets: {
         title: 'ポックラ対象曲',

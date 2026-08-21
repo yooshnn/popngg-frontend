@@ -56,6 +56,57 @@ export const LEVEL_STATS = LEVEL_STATS_ROWS.map(({ level, total, peakIndex, spre
   ranks: toCounts(distribute(total, RANK_CODES.length, peakIndex, spread), RANK_CODES),
 }));
 
+// A lower peakIndex means better outcomes are concentrated near code 1, so
+// the average score climbs as peakIndex falls.
+const PROGRESS_BY_LEVEL_ROWS = LEVEL_STATS_ROWS.map(({ level, total, peakIndex, spread }) => ({
+  key: level,
+  total,
+  averageScore: 62_000 + Math.round((12 - peakIndex) * 2_800),
+  peakIndex,
+  spread,
+}));
+
+const PROGRESS_BY_DIFFICULTY_ROWS = [
+  { key: 1, total: 320, averageScore: 91_200, peakIndex: 2, spread: 3 },
+  { key: 2, total: 410, averageScore: 85_600, peakIndex: 3, spread: 3 },
+  { key: 3, total: 260, averageScore: 76_400, peakIndex: 5, spread: 3.5 },
+  { key: 4, total: 130, averageScore: 68_900, peakIndex: 7, spread: 3.5 },
+];
+
+export const PROGRESS_BY_LEVEL = toProgress(PROGRESS_BY_LEVEL_ROWS);
+export const PROGRESS_BY_DIFFICULTY = toProgress(PROGRESS_BY_DIFFICULTY_ROWS);
+
+function toProgress(specs) {
+  const rows = specs.map(({ key, total, averageScore, peakIndex, spread }) => ({
+    key,
+    total,
+    averageScore,
+    medals: toCounts(distribute(total, MEDAL_CODES.length, peakIndex, spread), MEDAL_CODES),
+    ranks: toCounts(distribute(total, RANK_CODES.length, peakIndex, spread), RANK_CODES),
+  }));
+
+  return { rows, summary: summarize(rows) };
+}
+
+function summarize(rows) {
+  const total = rows.reduce((sum, row) => sum + row.total, 0);
+  const weightedScore = rows.reduce((sum, row) => sum + row.averageScore * row.total, 0);
+
+  return {
+    total,
+    averageScore: total === 0 ? 0 : Math.round(weightedScore / total),
+    medals: mergeCounts(rows.map(row => row.medals), MEDAL_CODES),
+    ranks: mergeCounts(rows.map(row => row.ranks), RANK_CODES),
+  };
+}
+
+function mergeCounts(countLists, codes) {
+  return codes.map((code, index) => ({
+    code,
+    count: countLists.reduce((sum, counts) => sum + counts[index].count, 0),
+  }));
+}
+
 function toCounts(counts, codes) {
   return codes.map((code, index) => ({ code, count: counts[index] }));
 }

@@ -4,6 +4,8 @@ import {
   LEVEL_STATS,
   NEW_SONGS,
   OLD_SONGS,
+  PROGRESS_BY_DIFFICULTY,
+  PROGRESS_BY_LEVEL,
   RECORDS,
   SESSION,
   SESSION_COOKIE,
@@ -18,6 +20,7 @@ export const routes = [
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/popn-class-targets\/(current|legacy)$/, handle: handleTargets },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/level-stats$/, handle: handleLevelStats },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/records$/, handle: handleRecords },
+  { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/progress$/, handle: handleProgress },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)$/, handle: handleProfile },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/login$/, handle: handleLogin },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/logout$/, handle: handleLogout },
@@ -67,6 +70,18 @@ function handleLevelStats(request, response) {
   sendJson(response, 200, {
     code: 'SUCCESS',
     data: LEVEL_STATS,
+    message: 'The request is successful.',
+  });
+}
+
+function handleProgress(request, response) {
+  const origin = `http://${request.headers.host ?? 'localhost'}`;
+  const params = new URL(request.url ?? '/', origin).searchParams;
+  const data = params.get('by') === 'difficulty' ? PROGRESS_BY_DIFFICULTY : PROGRESS_BY_LEVEL;
+
+  sendJson(response, 200, {
+    code: 'SUCCESS',
+    data,
     message: 'The request is successful.',
   });
 }

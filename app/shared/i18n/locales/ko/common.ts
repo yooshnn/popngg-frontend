@@ -268,6 +268,38 @@ const common = {
         playInfo: '플레이 정보',
       },
     },
+    progress: {
+      title: '순회',
+      description: '집계 기준별 메달과 스코어 랭크 취득 현황을 확인합니다.',
+      axis: {
+        label: '집계 기준',
+        level: '레벨',
+        difficulty: '난이도',
+      },
+      detail: {
+        label: '표시',
+        brief: '간단히',
+        full: '자세히',
+      },
+      table: {
+        medal: '메달',
+        rank: '스코어',
+        caption: {
+          medal: '집계 기준별 메달 취득 현황',
+          rank: '집계 기준별 스코어 랭크 취득 현황',
+        },
+        column: {
+          key: '구분',
+          averageScore: '평균 스코어',
+          total: '합계',
+          summary: '전체',
+        },
+        rows: {
+          expand: '모두 보기',
+          collapse: '접기',
+        },
+      },
+    },
     home: {
       popnClassTargets: {
         title: '팝클 대상곡',

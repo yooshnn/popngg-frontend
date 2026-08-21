@@ -64,6 +64,10 @@ const common = {
       retry: '再試行',
     },
   },
+  date: {
+    today: '今日',
+    daysAgo: '{{count}}日前',
+  },
   dataTable: {
     search: {
       label: '検索',
@@ -481,6 +485,30 @@ const common = {
         totalLabel: '全譜面',
         chartLabel: 'レベル{{level}}の{{mode}}分布、全{{count}}譜面',
       },
+    },
+  },
+  users: {
+    title: 'ランキング',
+    description: '公開ユーザーランキングを確認できます。',
+    search: {
+      placeholder: 'ユーザー名・ポプともIDを検索',
+    },
+    sort: {
+      rank: '順位',
+      name: 'ユーザー名',
+      clearLevel: 'クリアレベル',
+      updatedAt: '更新日',
+    },
+    column: {
+      rank: '#',
+      user: 'ユーザー',
+      bestLevel: '最高Lv',
+      popnClass: 'ポップンクラス',
+      updatedAt: '更新日',
+    },
+    bestLevel: {
+      label: 'クリア {{clear}}、フルコンボ {{fullCombo}}、パーフェクト {{perfect}}',
+      none: '-',
     },
   },
 } as const satisfies TranslationShape<typeof koCommon>;

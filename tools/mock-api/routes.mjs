@@ -13,9 +13,11 @@ import {
   USER_PROFILE,
 } from './fixtures.mjs';
 import { readJson, sendJson } from './http.mjs';
+import { getUsers, InvalidUsersQueryError } from './users.mjs';
 
 export const routes = [
   { method: 'GET', pattern: /^\/api\/v1\/auth\/session$/, handle: handleSession },
+  { method: 'GET', pattern: /^\/api\/v1\/users$/, handle: handleUsers },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/popn-class-targets\/(current|legacy)$/, handle: handleTargets },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/level-stats$/, handle: handleLevelStats },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/records$/, handle: handleRecords },
@@ -33,6 +35,23 @@ function handleSession(request, response) {
     data: request.headers.cookie?.includes(`${SESSION_COOKIE}=1`) ? SESSION : null,
     message: 'The request is successful.',
   });
+}
+
+function handleUsers(request, response) {
+  const origin = `http://${request.headers.host ?? 'localhost'}`;
+  const params = new URL(request.url ?? '/', origin).searchParams;
+
+  try {
+    const data = getUsers(params);
+    sendJson(response, 200, { code: 'SUCCESS', data, message: 'The request is successful.' });
+  }
+  catch (error) {
+    if (error instanceof InvalidUsersQueryError) {
+      sendJson(response, 400, { code: 'BAD_REQUEST', data: null, message: '요청 형식이 올바르지 않습니다.' });
+      return;
+    }
+    throw error;
+  }
 }
 
 function handleTargets(request, response, params) {

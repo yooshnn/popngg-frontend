@@ -80,7 +80,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </div>
       </section>
 
-      <p className="flex items-center gap-1.5 text-xs leading-5 text-fg-warning">
+      <p className="flex items-center gap-1.5 text-xs leading-5 text-fg-warning mb-8">
         <TriangleAlertIcon aria-hidden="true" className="size-3.5 shrink-0" />
         {t('home.notice')}
       </p>

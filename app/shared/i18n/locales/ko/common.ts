@@ -58,6 +58,10 @@ const common = {
       retry: '다시 시도',
     },
   },
+  date: {
+    today: '오늘',
+    daysAgo: '{{count}}일 전',
+  },
   dataTable: {
     search: {
       label: '검색',
@@ -475,6 +479,30 @@ const common = {
         totalLabel: '전체 채보',
         chartLabel: '레벨 {{level}} {{mode}} 분포, 전체 {{count}}채보',
       },
+    },
+  },
+  users: {
+    title: '랭킹',
+    description: '공개 유저 랭킹을 확인해보세요.',
+    search: {
+      placeholder: '유저 이름·팝토모 ID 검색',
+    },
+    sort: {
+      rank: '순위',
+      name: '유저 이름',
+      clearLevel: '클리어 레벨',
+      updatedAt: '갱신일',
+    },
+    column: {
+      rank: '#',
+      user: '사용자',
+      bestLevel: '최고 Lv',
+      popnClass: '팝픈클래스',
+      updatedAt: '갱신일',
+    },
+    bestLevel: {
+      label: '클리어 {{clear}}, 풀콤보 {{fullCombo}}, 퍼펙트 {{perfect}}',
+      none: '-',
     },
   },
 } as const;

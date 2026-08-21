@@ -10,6 +10,7 @@ export default [
       route('progress', 'routes/user.progress/route.tsx'),
     ]),
     route('renew', 'routes/renew/route.tsx'),
+    route('users', 'routes/users/route.tsx'),
     route('*', 'routes/not-found/route.tsx'),
   ]),
   { path: 'login', file: 'routes/login/route.tsx' },

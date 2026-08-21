@@ -1,5 +1,19 @@
 const common = {
-  demo: '팝픈',
+  home: {
+    description: '팝픈뮤직 플레이 데이터를 기록하고 랭킹으로 비교해보세요.',
+    welcomeTo: '에 어서 오세요!',
+    notice: '아직 개발 중인 서비스로, High☆Cheers!! 의 데이터는 예고 없이 초기화될 수 있습니다.',
+    introduction: {
+      before: 'popn.gg는 KONAMI의 아케이드 리듬게임',
+      game: '팝픈뮤직',
+      after: '의 비공식 플레이데이터 관리 서비스입니다.',
+    },
+    cta: {
+      register: '데이터 등록하기',
+      sample: '샘플 프로필',
+      profile: '내 페이지',
+    },
+  },
   header: {
     account: {
       logout: '로그아웃',

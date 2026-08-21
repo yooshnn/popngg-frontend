@@ -5,7 +5,21 @@ type TranslationShape<T> = {
 };
 
 const common = {
-  demo: 'ポップン',
+  home: {
+    description: 'ポップンミュージックのプレイデータを記録して、ランキングで比較しましょう。',
+    welcomeTo: 'へようこそ!',
+    notice: '現在開発中のサービスのため、High☆Cheers!!のデータは予告なく初期化される場合があります。',
+    introduction: {
+      before: 'popn.ggはKONAMIのアーケードリズムゲーム',
+      game: 'ポップンミュージック',
+      after: 'の非公式プレイデータ管理サービスです。',
+    },
+    cta: {
+      register: 'データを登録する',
+      sample: 'サンプルプロフィール',
+      profile: 'マイページ',
+    },
+  },
   header: {
     account: {
       logout: 'ログアウト',

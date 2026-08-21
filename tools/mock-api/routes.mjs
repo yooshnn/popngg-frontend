@@ -14,8 +14,6 @@ import {
 import { readJson, sendJson } from './http.mjs';
 
 export const routes = [
-  { method: 'GET', pattern: /^\/api\/v1\/ping$/, handle: handlePing },
-  { method: 'GET', pattern: /^\/api\/v1\/pong$/, handle: handlePong },
   { method: 'GET', pattern: /^\/api\/v1\/auth\/session$/, handle: handleSession },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/popn-class-targets\/(current|legacy)$/, handle: handleTargets },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/level-stats$/, handle: handleLevelStats },
@@ -25,22 +23,6 @@ export const routes = [
   { method: 'POST', pattern: /^\/api\/v1\/auth\/login$/, handle: handleLogin },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/logout$/, handle: handleLogout },
 ];
-
-function handlePing(request, response) {
-  sendJson(response, 200, {
-    code: 'SUCCESS',
-    data: { message: 'pong', receivedCookie: Boolean(request.headers.cookie) },
-    message: 'The request is successful.',
-  });
-}
-
-function handlePong(request, response) {
-  sendJson(response, 200, {
-    code: 'SUCCESS',
-    data: { message: 'ping', receivedCookie: Boolean(request.headers.cookie) },
-    message: 'The request is successful.',
-  });
-}
 
 function handleSession(request, response) {
   sendJson(response, 200, {

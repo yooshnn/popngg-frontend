@@ -40,10 +40,7 @@ export function LevelStatsSection({ userId }: { userId: string }) {
 }
 
 function LevelStatsContent({ stats }: { stats: NonEmptyArray<LevelStats> }) {
-  const [{ level, mode }, setSearchParams] = useQueryStates(levelStatsSearchParams, {
-    history: 'push',
-    shallow: true,
-  });
+  const [{ level, mode }, setSearchParams] = useQueryStates(levelStatsSearchParams);
   const { current, stepperProps } = useLevelSelection(stats, level, nextLevel => setSearchParams({ level: nextLevel }));
   const presentation = useMemo(
     () => getLevelStatsPresentation(mode, current),

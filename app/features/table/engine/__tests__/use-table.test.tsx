@@ -15,11 +15,11 @@ import { Controller } from 'react-hook-form';
 import { afterEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
 
 import { z } from 'zod';
-import { singleKeyBinding } from '../core/url-binding';
+import { rangeBinding, singleKeyBinding } from '../core/url-binding';
 import { useTable } from '../use-table';
 import '@testing-library/jest-dom/vitest';
 
-const rangeBinding: UrlBinding<{ min?: number; max?: number }> = {
+const levelRangeFilter: UrlBinding<{ min?: number; max?: number }> = {
   parsers: {
     levelMin: parseAsInteger,
     levelMax: parseAsInteger,
@@ -35,40 +35,15 @@ const rangeBinding: UrlBinding<{ min?: number; max?: number }> = {
 };
 
 const levelField = {
-  binding: {
-    parsers: {
-      formMin: parseAsInteger,
-      formMax: parseAsInteger,
-    },
-    read: (values: { formMin?: number; formMax?: number }) => ({
-      min: values.formMin ?? undefined,
-      max: values.formMax ?? undefined,
-    }),
-    write: (value: { min?: number; max?: number } | undefined) => ({
-      formMin: value?.min ?? null,
-      formMax: value?.max ?? null,
-    }),
-  },
+  binding: rangeBinding('formMin', 'formMax', { min: 1, max: 50 }),
   defaultValue: { min: '', max: '' },
-  draftSchema: z
+  schema: z
     .object({
       min: z.string(),
       max: z.string(),
     })
     .refine(
       value => value.min === '' || value.max === '' || Number(value.min) <= Number(value.max),
-      '최대 레벨은 최소 레벨보다 작을 수 없습니다.',
-    ),
-  appliedSchema: z
-    .object({
-      min: z.number().int().min(1).max(50).optional(),
-      max: z.number().int().min(1).max(50).optional(),
-    })
-    .refine(
-      value =>
-        value.min === undefined
-        || value.max === undefined
-        || value.min <= value.max,
       '최대 레벨은 최소 레벨보다 작을 수 없습니다.',
     ),
   toDraft: (value: { min?: number; max?: number } | undefined) => ({
@@ -84,7 +59,7 @@ const levelField = {
 const config = {
   filter: {
     query: singleKeyBinding('q', parseAsString),
-    level: rangeBinding,
+    level: levelRangeFilter,
   },
   form: {
     level: levelField,

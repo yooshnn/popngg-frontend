@@ -9,11 +9,12 @@ import {
 } from '@testing-library/react';
 import { parseAsString } from 'nuqs';
 import { useForm } from 'react-hook-form';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
+import { getClientI18n } from '~/shared/i18n/client';
 import { defineTableFormField } from '../../engine/form/field-config';
-import { TableFormField } from '../table-form-field';
+import { bindTableFormField, TableFormField } from '../table-form-field';
 import '@testing-library/jest-dom/vitest';
 
 const versionField = defineTableFormField<string | undefined, string>({
@@ -23,11 +24,13 @@ const versionField = defineTableFormField<string | undefined, string>({
     write: value => ({ version: value ?? null }),
   },
   defaultValue: '',
-  draftSchema: z.string().refine(
-    value => value === '' || value === 'Lively',
-    '지원하지 않는 버전입니다.',
-  ),
-  appliedSchema: z.literal('Lively'),
+  schema: z
+    .string()
+    .refine(value => value !== 'fraction', 'tableForm.error.level.reversed')
+    .refine(value => value !== 'too-high', {
+      error: 'tableForm.error.level.range',
+      params: { min: 1, max: 50 },
+    }),
   toDraft: value => value ?? '',
   toApplied: value => value || undefined,
   render: ({ error, field }) => (
@@ -43,7 +46,8 @@ const versionField = defineTableFormField<string | undefined, string>({
       >
         <option value="">모든 버전</option>
         <option value="Lively">Lively</option>
-        <option value="invalid">잘못된 값</option>
+        <option value="fraction">정수가 아닌 값</option>
+        <option value="too-high">범위를 넘는 값</option>
       </select>
       {error && <p data-testid="error">{error}</p>}
     </label>
@@ -70,6 +74,10 @@ function Probe() {
 }
 
 describe('tableFormField', () => {
+  beforeAll(async () => {
+    await getClientI18n();
+  });
+
   afterEach(cleanup);
 
   it('renders a reusable definition and forwards draft changes', () => {
@@ -84,15 +92,15 @@ describe('tableFormField', () => {
     expect(screen.getByTestId('value')).toHaveTextContent('Lively');
   });
 
-  it('forwards the first schema error and clears it after a valid change', async () => {
+  it('translates the first schema message and clears it after a valid change', async () => {
     render(<Probe />);
 
     fireEvent.change(screen.getByLabelText('버전'), {
-      target: { value: 'invalid' },
+      target: { value: 'fraction' },
     });
 
     expect(await screen.findByTestId('error')).toHaveTextContent(
-      '지원하지 않는 버전입니다.',
+      '최소 레벨은 최대 레벨보다 클 수 없습니다.',
     );
 
     fireEvent.change(screen.getByLabelText('버전'), {
@@ -100,5 +108,63 @@ describe('tableFormField', () => {
     });
 
     await waitFor(() => expect(screen.queryByTestId('error')).not.toBeInTheDocument());
+  });
+
+  it('interpolates the values carried on the issue', async () => {
+    render(<Probe />);
+
+    fireEvent.change(screen.getByLabelText('버전'), {
+      target: { value: 'too-high' },
+    });
+
+    expect(await screen.findByTestId('error')).toHaveTextContent(
+      '레벨은 1~50 사이의 정수로 입력해 주세요.',
+    );
+  });
+});
+
+const BoundField = bindTableFormField(form);
+
+function BoundProbe() {
+  const { control, watch } = useForm({
+    defaultValues: { version: '' },
+    mode: 'onChange',
+  });
+
+  return (
+    <>
+      <BoundField control={control} name="version" />
+      <output data-testid="value">{watch('version')}</output>
+    </>
+  );
+}
+
+describe('bindTableFormField', () => {
+  beforeAll(async () => {
+    await getClientI18n();
+  });
+
+  afterEach(cleanup);
+
+  it('renders the bound config without repeating it at each call', () => {
+    render(<BoundProbe />);
+
+    fireEvent.change(screen.getByLabelText('버전'), {
+      target: { value: 'Lively' },
+    });
+
+    expect(screen.getByTestId('value')).toHaveTextContent('Lively');
+  });
+
+  it('keeps validating through the bound config', async () => {
+    render(<BoundProbe />);
+
+    fireEvent.change(screen.getByLabelText('버전'), {
+      target: { value: 'too-high' },
+    });
+
+    expect(await screen.findByTestId('error')).toHaveTextContent(
+      '레벨은 1~50 사이의 정수로 입력해 주세요.',
+    );
   });
 });

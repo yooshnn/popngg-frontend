@@ -27,6 +27,7 @@ export const USER_PROFILE = {
 export const NEW_SONGS = songs.slice(0, 20);
 export const OLD_SONGS = songs.slice(20, 60);
 export const LEGACY_TARGETS = songs.slice(0, 50);
+export const RECORDS = songs.map(({ value, ...song }) => ({ ...song, popnClass: value }));
 
 const MEDAL_CODES = Array.from({ length: 13 }, (_, index) => index + 1);
 const RANK_CODES = Array.from({ length: 13 }, (_, index) => index + 1);

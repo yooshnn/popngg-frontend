@@ -1,7 +1,6 @@
 import type { UrlValues } from '../core/use-url-state';
 import type { FormConfig, FormDraftValues, FormValues } from './use-table-form';
 import { writeBinding } from '../core/url-binding';
-import { readAppliedValue } from './field-config';
 
 export function readFormValues(
   config: FormConfig | undefined,
@@ -10,7 +9,7 @@ export function readFormValues(
   return Object.fromEntries(
     Object.entries(config ?? {}).map(([key, field]) => [
       key,
-      readAppliedValue(field, field.binding.read(values)),
+      field.binding.read(values),
     ]),
   );
 }
@@ -89,7 +88,7 @@ export function validateFormDraftValues(
   const validatedValues: Record<string, unknown> = {};
 
   for (const [key, field] of Object.entries(config ?? {})) {
-    const result = field.draftSchema.safeParse(values[key]);
+    const result = field.schema.safeParse(values[key]);
 
     if (!result.success)
       throw result.error;

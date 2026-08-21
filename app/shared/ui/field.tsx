@@ -1,6 +1,10 @@
 import type { ComponentProps } from 'react';
 import { tv } from 'tailwind-variants';
 
+const setStyles = tv({
+  base: 'flex min-w-0 flex-col gap-5',
+});
+
 const groupStyles = tv({
   base: 'group/field-group flex w-full flex-col gap-5',
 });
@@ -41,6 +45,25 @@ export type FieldLevel = 'legend' | 'label' | 'field';
 export type FieldLabelProps
   = ComponentProps<'label'>
     & { variant?: FieldLevel };
+
+export type FieldLegendProps
+  = ComponentProps<'legend'>
+    & { variant?: Exclude<FieldLevel, 'field'> };
+
+export function FieldSet({ className, ...props }: ComponentProps<'fieldset'>) {
+  return <fieldset {...props} data-slot="field-set" className={setStyles({ className })} />;
+}
+
+export function FieldLegend({ className, variant = 'legend', ...props }: FieldLegendProps) {
+  return (
+    <legend
+      {...props}
+      data-slot="field-legend"
+      data-variant={variant}
+      className={levelRecipe({ variant, className })}
+    />
+  );
+}
 
 export function FieldGroup({ className, ...props }: ComponentProps<'div'>) {
   return <div {...props} data-slot="field-group" className={groupStyles({ className })} />;

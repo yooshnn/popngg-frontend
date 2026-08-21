@@ -1,28 +1,13 @@
-import type { UrlBinding } from '../core/url-binding';
 import type { TableConfig } from '../use-table';
-import { parseAsInteger, parseAsString, parseAsStringLiteral } from 'nuqs';
+import { parseAsString, parseAsStringLiteral } from 'nuqs';
 
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 import { buildTableParams } from '../build-table-params';
 import { compileTableConfig } from '../compile-table-config';
-import { singleKeyBinding } from '../core/url-binding';
+import { rangeBinding, singleKeyBinding } from '../core/url-binding';
 
-const levelRange: UrlBinding<{ min?: number; max?: number }> = {
-  parsers: {
-    levelMin: parseAsInteger,
-    levelMax: parseAsInteger,
-  },
-  read: (values) => {
-    const min = values.levelMin ?? undefined;
-    const max = values.levelMax ?? undefined;
-    return min === undefined && max === undefined ? undefined : { min, max };
-  },
-  write: value => ({
-    levelMin: value?.min ?? null,
-    levelMax: value?.max ?? null,
-  }),
-};
+const levelRange = rangeBinding('levelMin', 'levelMax', { min: 1, max: 50 });
 
 const tableConfig = {
   filter: {
@@ -36,8 +21,7 @@ const tableConfig = {
         parseAsStringLiteral(['normal', 'hard'] as const),
       ),
       defaultValue: 'normal',
-      draftSchema: z.string(),
-      appliedSchema: z.enum(['normal', 'hard']),
+      schema: z.string(),
       toDraft: value => value ?? 'normal',
       toApplied: value => value,
     },
@@ -149,11 +133,12 @@ describe('buildTableParams', () => {
     expect(params.has('unrelated')).toBe(false);
   });
 
-  it('omits a single-key form value rejected by its applied schema', () => {
+  it('omits a multi-key value the binding discarded as invalid', () => {
     const compiled = compileTableConfig(tableConfig);
-    const params = buildTableParams(compiled, { difficulty: 'unknown' });
+    const params = buildTableParams(compiled, { levelMin: 20, levelMax: 10 });
 
-    expect(params.has('difficulty')).toBe(false);
+    expect(params.has('levelMin')).toBe(false);
+    expect(params.has('levelMax')).toBe(false);
   });
 
   it('materializes canonical sort and pagination defaults', () => {

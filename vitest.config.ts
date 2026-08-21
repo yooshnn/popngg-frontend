@@ -10,5 +10,6 @@ export default defineConfig({
       VITE_API_BASE_URL: 'https://api.test/',
     },
     include: ['app/**/*.test.{ts,tsx}'],
+    setupFiles: ['./vitest.setup.ts'],
   },
 });

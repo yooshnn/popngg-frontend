@@ -61,6 +61,7 @@ const common = {
       clear: 'フィルターをリセット',
       reset: 'リセット',
       apply: '適用',
+      invalidValue: '正しくない値です。',
     },
     sort: {
       label: '並び順',
@@ -78,6 +79,29 @@ const common = {
       current: '{{page}} / {{total}}ページ',
       pageSize: 'ページあたりの表示件数',
       pageSizeOption: '{{size}}件ずつ',
+    },
+  },
+  tableForm: {
+    version: 'バージョン',
+    allVersions: 'すべてのバージョン',
+    level: 'レベル',
+    difficulty: '難易度',
+    medal: 'メダル',
+    rank: 'ランク',
+    score: 'スコア',
+    minimum: '最小',
+    maximum: '最大',
+    noLimit: '指定なし',
+    points: '点',
+    error: {
+      level: {
+        range: 'レベルは{{min}}〜{{max}}の整数で入力してください。',
+        reversed: '最小レベルは最大レベル以下にしてください。',
+      },
+      score: {
+        range: 'スコアは{{min}}〜{{max}}の整数で入力してください。',
+        reversed: '最小スコアは最大スコア以下にしてください。',
+      },
     },
   },
   footer: {
@@ -178,6 +202,38 @@ const common = {
       belowB: 'B未満',
     },
   },
+  version: {
+    1: 'ポップン 1',
+    2: 'ポップン 2',
+    3: 'ポップン 3',
+    4: 'ポップン 4',
+    5: 'ポップン 5',
+    6: 'ポップン 6',
+    7: 'ポップン 7',
+    8: 'ポップン 8',
+    9: 'ポップン 9',
+    10: 'ポップン 10',
+    11: 'ポップン 11',
+    12: 'いろは',
+    13: 'カーニバル',
+    14: 'FEVER!',
+    15: 'ADVENTURE',
+    16: 'PARTY♪',
+    17: 'THE MOVIE',
+    18: 'せんごく列伝',
+    19: 'TUNE STREET',
+    20: 'fantasia',
+    21: 'Sunny Park',
+    22: 'ラピストリア',
+    23: 'éclale',
+    24: 'うさぎと猫と少年の夢',
+    25: 'peace',
+    26: '解明リドルズ',
+    27: 'UniLab',
+    28: 'Jam&Fizz',
+    29: 'High☆Cheers!!',
+    99: 'その他',
+  },
   user: {
     profile: {
       updatedAt: '{{date}} 更新',
@@ -196,6 +252,26 @@ const common = {
       },
       progress: {
         label: '埋め',
+      },
+    },
+    records: {
+      title: 'プレーデータ',
+      description: 'メダル、ランク、スコアを基準に記録を確認します。',
+      search: {
+        placeholder: '曲名・ジャンルを検索',
+      },
+      view: {
+        label: '表示形式',
+        list: '一覧',
+        card: 'カード',
+      },
+      sort: {
+        level: 'レベル',
+        score: 'スコア',
+      },
+      filter: {
+        chartInfo: '楽曲情報',
+        playInfo: 'プレー情報',
       },
     },
     home: {

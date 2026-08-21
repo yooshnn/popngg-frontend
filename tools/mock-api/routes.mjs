@@ -4,6 +4,7 @@ import {
   LEVEL_STATS,
   NEW_SONGS,
   OLD_SONGS,
+  RECORDS,
   SESSION,
   SESSION_COOKIE,
   USER_PROFILE,
@@ -16,6 +17,7 @@ export const routes = [
   { method: 'GET', pattern: /^\/api\/v1\/auth\/session$/, handle: handleSession },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/popn-class-targets\/(current|legacy)$/, handle: handleTargets },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/level-stats$/, handle: handleLevelStats },
+  { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)\/records$/, handle: handleRecords },
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)$/, handle: handleProfile },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/login$/, handle: handleLogin },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/logout$/, handle: handleLogout },
@@ -67,6 +69,86 @@ function handleLevelStats(request, response) {
     data: LEVEL_STATS,
     message: 'The request is successful.',
   });
+}
+
+function handleRecords(request, response) {
+  const origin = `http://${request.headers.host ?? 'localhost'}`;
+  const params = new URL(request.url ?? '/', origin).searchParams;
+
+  const query = params.get('q')?.trim().toLowerCase();
+  const version = toInt(params.get('version'));
+  const levelMin = toInt(params.get('levelMin'));
+  const levelMax = toInt(params.get('levelMax'));
+  const scoreMin = toInt(params.get('scoreMin'));
+  const scoreMax = toInt(params.get('scoreMax'));
+  const difficulty = toCodeSet(params.get('difficulty'));
+  const medal = toCodeSet(params.get('medal'));
+  const rank = toCodeSet(params.get('rank'));
+  const sortKey = params.get('sort') === 'score' ? 'score' : 'level';
+  const order = params.get('order') === 'asc' ? 'asc' : 'desc';
+  const page = Math.max(toInt(params.get('page')) ?? 1, 1);
+  const size = toInt(params.get('size')) ?? 20;
+
+  const filtered = RECORDS.filter((record) => {
+    if (query && !record.title.toLowerCase().includes(query) && !record.genre.toLowerCase().includes(query))
+      return false;
+    if (version !== undefined && record.version !== version)
+      return false;
+    if (levelMin !== undefined && record.level < levelMin)
+      return false;
+    if (levelMax !== undefined && record.level > levelMax)
+      return false;
+    if (scoreMin !== undefined && record.score < scoreMin)
+      return false;
+    if (scoreMax !== undefined && record.score > scoreMax)
+      return false;
+    if (difficulty && !difficulty.has(record.difficulty))
+      return false;
+    if (medal && !medal.has(record.medal))
+      return false;
+    if (rank && !rank.has(record.rank))
+      return false;
+    return true;
+  });
+
+  const direction = order === 'asc' ? 1 : -1;
+  const sorted = [...filtered].sort((left, right) => {
+    const diff = (left[sortKey] - right[sortKey]) * direction;
+    return diff !== 0 ? diff : left.id.localeCompare(right.id);
+  });
+
+  const totalItems = sorted.length;
+  const totalPages = Math.ceil(totalItems / size);
+  const start = (page - 1) * size;
+  const items = sorted.slice(start, start + size).map(record => resolveBanner(record, origin));
+
+  sendJson(response, 200, {
+    code: 'SUCCESS',
+    data: {
+      items,
+      totalItems,
+      totalPages,
+      hasPrev: page > 1,
+      hasNext: page < totalPages,
+    },
+    message: 'The request is successful.',
+  });
+}
+
+function toInt(value) {
+  if (value === null || value === '')
+    return undefined;
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) ? parsed : undefined;
+}
+
+function toCodeSet(value) {
+  if (!value)
+    return undefined;
+
+  const codes = value.split(',').map(Number).filter(Number.isInteger);
+  return codes.length > 0 ? new Set(codes) : undefined;
 }
 
 function handleProfile(request, response, params) {

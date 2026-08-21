@@ -1,6 +1,5 @@
 import type { CompiledTableConfig } from './compile-table-config';
 import { writeBinding } from './core/url-binding';
-import { readAppliedValue } from './form/field-config';
 import { resolvePaginationState } from './pagination/use-table-pagination';
 import { resolveSortState } from './sort/use-table-sort';
 
@@ -16,11 +15,7 @@ export function buildTableParams(
   }
 
   for (const field of Object.values(compiled.form ?? {})) {
-    writeBinding(
-      params,
-      field.binding,
-      readAppliedValue(field, field.binding.read(values)),
-    );
+    writeBinding(params, field.binding, field.binding.read(values));
   }
 
   if (compiled.sort) {

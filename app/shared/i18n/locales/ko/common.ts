@@ -55,6 +55,7 @@ const common = {
       clear: '필터 초기화',
       reset: '초기화',
       apply: '적용',
+      invalidValue: '잘못된 값입니다.',
     },
     sort: {
       label: '정렬',
@@ -72,6 +73,29 @@ const common = {
       current: '{{page}} / {{total}} 페이지',
       pageSize: '페이지당 표시 개수',
       pageSizeOption: '{{size}}개씩',
+    },
+  },
+  tableForm: {
+    version: '버전',
+    allVersions: '모든 버전',
+    level: '레벨',
+    difficulty: '난이도',
+    medal: '메달',
+    rank: '랭크',
+    score: '스코어',
+    minimum: '최소',
+    maximum: '최대',
+    noLimit: '제한 없음',
+    points: '점',
+    error: {
+      level: {
+        range: '레벨은 {{min}}~{{max}} 사이의 정수로 입력해 주세요.',
+        reversed: '최소 레벨은 최대 레벨보다 클 수 없습니다.',
+      },
+      score: {
+        range: '스코어는 {{min}}~{{max}} 사이의 정수로 입력해 주세요.',
+        reversed: '최소 스코어는 최대 스코어보다 클 수 없습니다.',
+      },
     },
   },
   footer: {
@@ -172,6 +196,38 @@ const common = {
       belowB: 'B 미만',
     },
   },
+  version: {
+    1: '팝픈 1',
+    2: '팝픈 2',
+    3: '팝픈 3',
+    4: '팝픈 4',
+    5: '팝픈 5',
+    6: '팝픈 6',
+    7: '팝픈 7',
+    8: '팝픈 8',
+    9: '팝픈 9',
+    10: '팝픈 10',
+    11: '팝픈 11',
+    12: '이로하',
+    13: '카니발',
+    14: 'FEVER!',
+    15: 'ADVENTURE',
+    16: 'PARTY♪',
+    17: 'THE MOVIE',
+    18: '전국열전',
+    19: 'TUNE STREET',
+    20: 'fantasia',
+    21: 'Sunny Park',
+    22: '라피스토리아',
+    23: 'éclale',
+    24: '토끼와 고양이와 소년의 꿈',
+    25: 'peace',
+    26: '해명 리들스',
+    27: 'UniLab',
+    28: 'Jam&Fizz',
+    29: 'High☆Cheers!!',
+    99: '기타',
+  },
   user: {
     profile: {
       updatedAt: '{{date}} 갱신',
@@ -190,6 +246,26 @@ const common = {
       },
       progress: {
         label: '순회',
+      },
+    },
+    records: {
+      title: '플레이 데이터',
+      description: '메달, 랭크, 스코어를 기준으로 기록을 확인합니다.',
+      search: {
+        placeholder: '곡명·장르 검색',
+      },
+      view: {
+        label: '보기 형식',
+        list: '리스트',
+        card: '카드',
+      },
+      sort: {
+        level: '레벨',
+        score: '스코어',
+      },
+      filter: {
+        chartInfo: '곡 정보',
+        playInfo: '플레이 정보',
       },
     },
     home: {

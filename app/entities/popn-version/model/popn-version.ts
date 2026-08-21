@@ -51,3 +51,7 @@ export function from(code: number): PopnVersion | null {
 
   return byCode[code] ?? null;
 }
+
+export function labelKey(value: PopnVersion): `version.${PopnVersion}` {
+  return `version.${value}`;
+}

@@ -4,9 +4,16 @@ export {
   compileTableConfig,
 } from './engine/compile-table-config';
 export {
+  getRangeValidationIssue,
+  type NumericCodeEntity,
+  rangeBinding,
+  type RangeBounds,
+  type RangeValidationIssue,
+  selectionBinding,
   singleKeyBinding,
   type UrlBinding,
   type UrlParserMap,
+  type UrlRange,
 } from './engine/core/url-binding';
 export {
   type FilterConfig,
@@ -44,6 +51,36 @@ export {
 } from './engine/use-table';
 export type { TableConfig, TableReturn } from './engine/use-table';
 export {
+  canonicalizeSelection,
+  compactRange,
+  difficultyField,
+  type GroupedSelectionFieldDefinition,
+  levelField,
+  medalField,
+  NO_VERSION,
+  NumberInput,
+  type NumberInputProps,
+  type RangeFieldDefinition,
+  RangeFieldLayout,
+  type RangeFieldLayoutProps,
+  rankField,
+  scoreField,
+  SelectInput,
+  type SelectInputOption,
+  type SelectInputProps,
+  type SelectionFieldDefinition,
+  type SelectionGroup,
+  tableFields,
+  toggleGroup,
+  toggleSelection,
+  type VersionDraft,
+  versionField,
+  type VersionFieldDefinition,
+} from './fields';
+export {
+  bindTableFormField,
+  FormSection,
+  type FormSectionProps,
   TableFilter,
   TableFormField,
   TablePagination,

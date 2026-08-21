@@ -4,11 +4,19 @@ import type { ZodType } from 'zod';
 
 import type { UrlBinding } from '../core/url-binding';
 
+/**
+ * One filter field.
+ *
+ * Discarding unusable URL state is the binding's responsibility: `read` yields
+ * a valid value or `undefined`, and `undefined` seeds the form with
+ * `defaultValue`. The draft schema only judges what the user types, and its
+ * issues carry any interpolation values they need as `params`.
+ */
 export interface FormFieldConfig<TApplied, TDraft> {
   binding: UrlBinding<TApplied>;
   defaultValue: TDraft;
-  draftSchema: ZodType<TDraft>;
-  appliedSchema: ZodType<TApplied>;
+  /** Issue messages are translation keys, not literals. */
+  schema: ZodType<TDraft>;
   toDraft: (value: TApplied | undefined) => TDraft;
   toApplied: (draft: TDraft) => TApplied | undefined;
 }
@@ -33,18 +41,6 @@ export function defineTableFormField<TApplied, TDraft>(
   definition: TableFormFieldDefinition<TApplied, TDraft>,
 ): TableFormFieldDefinition<TApplied, TDraft> {
   return definition;
-}
-
-/** Validates a value read from URL state at the external-input boundary. */
-export function readAppliedValue<TApplied, TDraft>(
-  field: FormFieldConfig<TApplied, TDraft>,
-  value: TApplied | undefined,
-): TApplied | undefined {
-  if (value === undefined)
-    return undefined;
-
-  const result = field.appliedSchema.safeParse(value);
-  return result.success ? result.data : undefined;
 }
 
 export type FormConfig = Record<string, FormFieldConfig<any, any>>;

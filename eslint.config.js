@@ -12,6 +12,7 @@ export default antfu(
       '.wrangler/**',
       '.react-router/**',
       'build/**',
+      'public/**',
       'worker-configuration.d.ts',
     ],
   },

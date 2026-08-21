@@ -7,6 +7,7 @@ import {
   PROGRESS_BY_DIFFICULTY,
   PROGRESS_BY_LEVEL,
   RECORDS,
+  RENEWAL_RESULT,
   SESSION,
   SESSION_COOKIE,
   USER_PROFILE,
@@ -22,6 +23,8 @@ export const routes = [
   { method: 'GET', pattern: /^\/api\/v1\/users\/([^/]+)$/, handle: handleProfile },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/login$/, handle: handleLogin },
   { method: 'POST', pattern: /^\/api\/v1\/auth\/logout$/, handle: handleLogout },
+  { method: 'POST', pattern: /^\/api\/v1\/auth\/register$/, handle: handleRegister },
+  { method: 'POST', pattern: /^\/api\/v1\/renewals$/, handle: handleRenewal },
 ];
 
 function handleSession(request, response) {
@@ -178,4 +181,25 @@ async function handleLogin(request, response) {
 function handleLogout(request, response) {
   response.setHeader('Set-Cookie', `${SESSION_COOKIE}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`);
   sendJson(response, 200, { code: 'SUCCESS', data: null, message: 'The request is successful.' });
+}
+
+async function handleRegister(request, response) {
+  try {
+    await readJson(request);
+    response.setHeader('Set-Cookie', `${SESSION_COOKIE}=1; HttpOnly; SameSite=Lax; Path=/; Max-Age=3600`);
+    sendJson(response, 200, { code: 'SUCCESS', data: SESSION, message: 'The request is successful.' });
+  }
+  catch {
+    sendJson(response, 400, { code: 'BAD_REQUEST', data: null, message: '요청 형식이 올바르지 않습니다.' });
+  }
+}
+
+async function handleRenewal(request, response) {
+  try {
+    await readJson(request);
+    sendJson(response, 200, { code: 'SUCCESS', data: RENEWAL_RESULT, message: 'The request is successful.' });
+  }
+  catch {
+    sendJson(response, 400, { code: 'BAD_REQUEST', data: null, message: '요청 형식이 올바르지 않습니다.' });
+  }
 }

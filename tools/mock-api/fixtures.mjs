@@ -8,6 +8,17 @@ export const SESSION = {
   avatarUrl: null,
 };
 
+export const RENEWAL_RESULT = {
+  renewedAt: '2026-08-21T04:12:00.000Z',
+  summary: {
+    chartsScanned: 1240,
+    recordsAdded: 18,
+    medalsImproved: 7,
+    scoresImproved: 12,
+    popnClassDelta: 240,
+  },
+};
+
 export const USER_PROFILE = {
   id: SESSION.poptomoId,
   name: SESSION.userName,

@@ -10,7 +10,7 @@ export interface LoginVariables extends LoginPayload {
 }
 
 export interface UseLoginOptions {
-  redirectTo: string;
+  redirectTo: string | null;
 }
 
 export function useLogin({ redirectTo }: UseLoginOptions) {
@@ -28,7 +28,9 @@ export function useLogin({ redirectTo }: UseLoginOptions) {
 
       await (remember ? rememberedIdCookie.write(session.id) : rememberedIdCookie.clear());
 
-      await navigate(redirectTo);
+      if (redirectTo !== null) {
+        await navigate(redirectTo);
+      }
     },
   });
 }

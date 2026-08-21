@@ -167,6 +167,134 @@ const common = {
       passwordInquiry: 'パスワードのお問い合わせ',
     },
   },
+  register: {
+    title: '登録',
+    description: '公式サイトで確認したポプトモIDでアカウントを作成します。',
+    passwordConfirm: {
+      label: 'パスワード確認',
+      placeholder: 'パスワードを再入力',
+      locked: '先にパスワードを入力してください',
+      mismatch: 'パスワードが一致しません。',
+    },
+    private: {
+      label: 'プロフィールを非公開にする',
+      description: '自分のプレイデータを他の人に表示しません。',
+    },
+    submit: '登録してはじめる',
+  },
+  renew: {
+    title: 'データ登録',
+    description: '下記のガイドに従ってデータを登録してください。',
+    bookmarklet: {
+      label: 'popn.gg Data Renewal',
+      copy: 'コードをコピー',
+      copied: 'コピーしました',
+    },
+    platform: {
+      label: 'ご利用の環境',
+      desktop: 'PC',
+      mobile: 'スマホ',
+    },
+    step: {
+      open: {
+        title: '公式サイトを開く',
+        description: {
+          before: 'e-amusementにログインしてから、ポップンミュージックの',
+          playdata: 'プレーデータトップページ',
+          after: 'へ移動してください。',
+        },
+      },
+      desktop: {
+        copy: {
+          title: 'コードをコピーする',
+          description: '下のコードをコピーしてください。',
+        },
+        install: {
+          title: 'ブックマークバーに登録する',
+          description: '新しいブックマークを作成し、コピーしたコードをURL欄に貼り付けてください。',
+          bookmarkBarNote: 'ブックマークバーが表示されていない場合は、Ctrl+Shift+B（MacはCommand+Shift+B）で表示できます。',
+          manualNote: {
+            before: 'URLが',
+            after: 'で始まっていることを確認してください。消えている場合は、URL欄の先頭に直接入力してください。',
+          },
+        },
+        run: {
+          title: 'ブックマークを実行する',
+          description: '登録したブックマークを押すとpopn.ggの画面が開き、あとは自動で進みます。',
+          note: '取得が終わるまで、両方の画面を開いたままにしてください。',
+        },
+      },
+      mobile: {
+        copy: {
+          title: 'コードをコピーする',
+          description: '下のコードをコピーしてください。',
+        },
+        bookmark: {
+          title: 'ブックマークに登録する',
+          description: '任意のページをブックマークに追加してから編集画面を開いてください。名前をわかりやすく変更し、URL欄にはコピーしたコードを貼り付けてください。',
+          note: 'URL欄を完全に空にしてから貼り付け、URLがjavascript:で始まっていることを確認してください。消えている場合は、URL欄の先頭に直接入力してください。',
+        },
+        run: {
+          title: 'ブックマークを実行する',
+          description: '登録したブックマークを実行するとpopn.ggの画面が開き、あとは自動で進みます。',
+          note: '取得が終わるまで、両方のタブを開いたままにしてください。新しいタブが開かない場合は、ブラウザのポップアップブロックを解除してください。',
+        },
+      },
+    },
+    requirement: 'e-amusementベーシックコース（月額330円）への加入が必要です。',
+  },
+  renewal: {
+    error: {
+      WRONG_PAGE: 'ポップンミュージックのプレーデータページで実行してください。下のリンクから移動して、ブックマークレットを再実行してください。',
+      FETCH_FAILED: '公式サイトと通信できませんでした。時間をおいてから、もう一度お試しください。',
+      STATE_UNREADABLE: '公式サイトのログイン状態を確認できませんでした。ページを再読み込みしてから、もう一度お試しください。',
+      NOT_LOGGED_IN: '公式サイトにログインしていません。e-amusementにログインしてから、もう一度お試しください。',
+      NO_BASIC_COURSE: 'プレーデータを取得するにはe-amusementベーシックコースへの加入が必要です。加入してから、もう一度お試しください。',
+      NO_EAPASS: 'e-amusement passが登録されていません。公式サイトでpassを登録してから、もう一度お試しください。',
+      NO_PLAYDATA: 'プレーデータが見つかりませんでした。1曲以上プレーしてから、もう一度お試しください。',
+      PROFILE_PARSE_FAILED: '公式サイトからプレーヤー情報を読み取れませんでした。サイトの変更によるエラーの可能性がありますので、お問い合わせください。',
+      NO_CHARTS_FOUND: 'プレーデータを取得できませんでした。しばらくしてから、もう一度お試しください。',
+      ABORTED: '更新を中断しました。もう一度更新するには、ブックマークレットを実行してください。',
+      GAME_ID_MISMATCH: 'popn.ggにログイン中のアカウントと公式サイトのアカウントが異なります。popn.ggからログアウトしてから、もう一度お試しください。',
+      HANDOFF_NO_RESPONSE: '公式サイトから応答がありませんでした。プレーデータページでブックマークレットを再実行してください。',
+      COLLECT_NOT_STARTED: 'プレーデータの取得を開始できませんでした。プレーデータページでブックマークレットを再実行してください。',
+      UPLOAD_FAILED: 'プレーデータを保存できませんでした。しばらくしてから、もう一度お試しください。',
+      UNKNOWN: '不明なエラーが発生しました。しばらくしてから、もう一度お試しください。',
+    },
+    accountLookupFailed: 'アカウント情報を確認できませんでした。しばらくしてから、ブックマークレットを再実行してください。',
+    errorCode: 'エラーコード: {{code}}',
+    action: {
+      toPlaydata: 'プレーデータトップページへ移動',
+      retry: '再試行',
+    },
+    sectionLabel: 'データ登録',
+    status: {
+      checking: '確認しています...',
+      waitingGameId: '公式サイトの情報を確認しています...',
+      checkingAccount: 'アカウントを確認しています...',
+      starting: '取得を開始します...',
+      uploading: '送信しています...',
+    },
+    noOpener: {
+      message: 'このページはpopn.ggのデータ更新ブックマークレットから開いてください。',
+      guide: '更新方法を見る',
+    },
+    phase: {
+      profile: 'プロフィールを確認しています',
+      levels: '曲リストを読み込んでいます',
+      details: '今作の記録を読み込んでいます',
+      done: '取得が完了しました',
+    },
+    login: {
+      title: 'ログイン',
+      description: 'パスワードを入力すると、すぐに更新を開始します。',
+    },
+    register: {
+      title: '新規登録',
+      description: '今後データを更新するときに使うパスワードを設定します。',
+      note: 'あとからいつでも変更できます。',
+    },
+  },
   medal: {
     name: {
       'gold-star': '金★',

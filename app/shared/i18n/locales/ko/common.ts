@@ -161,6 +161,134 @@ const common = {
       passwordInquiry: '비밀번호 문의',
     },
   },
+  register: {
+    title: '가입',
+    description: '공식 사이트에서 확인한 팝토모 ID로 계정을 만듭니다.',
+    passwordConfirm: {
+      label: '비밀번호 확인',
+      placeholder: '비밀번호 다시 입력',
+      locked: '비밀번호를 먼저 입력해주세요',
+      mismatch: '비밀번호가 일치하지 않습니다.',
+    },
+    private: {
+      label: '프로필 비공개',
+      description: '내 플레이 데이터를 다른 사람에게 보여주지 않습니다.',
+    },
+    submit: '가입하고 시작하기',
+  },
+  renew: {
+    title: '데이터 등록',
+    description: '아래 가이드를 따라 데이터를 등록해주세요.',
+    bookmarklet: {
+      label: 'popn.gg Data Renewal',
+      copy: '코드 복사',
+      copied: '복사했습니다',
+    },
+    platform: {
+      label: '사용 환경',
+      desktop: 'PC',
+      mobile: '모바일',
+    },
+    step: {
+      open: {
+        title: '공식 사이트 열기',
+        description: {
+          before: 'e-amusement에 로그인한 뒤 팝픈뮤직 ',
+          playdata: '플레이데이터 톱 페이지',
+          after: '로 이동하세요.',
+        },
+      },
+      desktop: {
+        copy: {
+          title: '코드 복사하기',
+          description: '아래 코드를 복사하세요.',
+        },
+        install: {
+          title: '북마크바에 등록하기',
+          description: '새 북마크를 만든 뒤 복사한 코드를 주소(URL) 칸에 붙여넣으세요.',
+          bookmarkBarNote: '북마크바가 보이지 않으면 Ctrl+Shift+B(맥은 ⌘+Shift+B)로 표시할 수 있습니다.',
+          manualNote: {
+            before: '주소가',
+            after: '로 시작하는지 확인하세요. 앞부분이 사라졌다면 주소 칸 맨 앞에 직접 입력해주세요.',
+          },
+        },
+        run: {
+          title: '북마크 실행하기',
+          description: '등록해둔 북마크를 누르면 popn.gg 창이 열리고 나머지는 자동으로 진행됩니다.',
+          note: '수집이 끝날 때까지 두 창을 모두 열어두세요.',
+        },
+      },
+      mobile: {
+        copy: {
+          title: '코드 복사하기',
+          description: '아래 코드를 복사하세요.',
+        },
+        bookmark: {
+          title: '북마크에 등록하기',
+          description: '아무 페이지나 북마크에 추가한 뒤 편집 화면을 여세요. 이름은 알아보기 쉽게 바꾸고, 주소(URL) 칸에는 복사한 코드를 붙여넣으세요.',
+          note: '주소(URL) 칸을 완전히 비운 뒤 붙여넣고, 주소가 javascript:로 시작하는지 확인하세요. 앞부분이 사라졌다면 맨 앞에 직접 입력해주세요.',
+        },
+        run: {
+          title: '북마크 실행하기',
+          description: '등록해둔 북마크를 실행하면 popn.gg 창이 열리고 나머지는 자동으로 진행됩니다.',
+          note: '수집이 끝날 때까지 두 탭을 모두 열어두세요. 새 탭이 열리지 않으면 브라우저의 팝업 차단을 해제해주세요.',
+        },
+      },
+    },
+    requirement: 'e-amusement 베이직 코스(월 330엔) 가입이 필요합니다.',
+  },
+  renewal: {
+    error: {
+      WRONG_PAGE: '팝픈뮤직 플레이데이터 페이지에서 실행해주세요. 아래 링크로 이동한 뒤 북마클릿을 다시 실행해주세요.',
+      FETCH_FAILED: '공식 사이트와 통신하지 못했습니다. 나중에 다시 시도해주세요',
+      STATE_UNREADABLE: '공식 사이트의 로그인 상태를 확인하지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.',
+      NOT_LOGGED_IN: '공식 사이트에 로그인되어 있지 않습니다. e-amusement에 로그인한 뒤 다시 시도해주세요.',
+      NO_BASIC_COURSE: '플레이데이터를 가져오려면 e-amusement 베이직 코스 가입이 필요합니다. 가입한 뒤 다시 시도해주세요.',
+      NO_EAPASS: 'e-amusement pass가 등록되어 있지 않습니다. 공식 사이트에서 pass를 등록한 뒤 다시 시도해주세요.',
+      NO_PLAYDATA: '플레이데이터를 하나도 찾지 못했습니다. 한 곡 이상 플레이한 뒤 다시 시도해주세요.',
+      PROFILE_PARSE_FAILED: '공식 사이트에서 플레이어 정보를 불러오지 못했습니다. 사이트 변경으로 인한 오류일 수 있으니 문의해주세요.',
+      NO_CHARTS_FOUND: '플레이데이터를 가져오지 못했습니다. 잠시 후 다시 시도해주세요.',
+      ABORTED: '갱신을 중단했습니다. 다시 갱신하려면 북마클릿을 실행해주세요.',
+      GAME_ID_MISMATCH: 'popn.gg에 로그인된 계정과 공식 사이트의 계정이 다릅니다. popn.gg에서 로그아웃한 뒤 다시 시도해주세요.',
+      HANDOFF_NO_RESPONSE: '공식 사이트에서 응답을 받지 못했습니다. 플레이데이터 페이지에서 북마클릿을 다시 실행해주세요.',
+      COLLECT_NOT_STARTED: '플레이데이터 수집을 시작하지 못했습니다. 플레이데이터 페이지에서 북마클릿을 다시 실행해주세요.',
+      UPLOAD_FAILED: '플레이데이터를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.',
+      UNKNOWN: '알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+    },
+    accountLookupFailed: '계정 정보를 확인하지 못했습니다. 잠시 후 북마클릿을 다시 실행해주세요.',
+    errorCode: '오류 코드: {{code}}',
+    action: {
+      toPlaydata: '플레이데이터 톱 페이지로 이동',
+      retry: '다시 시도',
+    },
+    sectionLabel: '데이터 등록',
+    status: {
+      checking: '확인하고 있습니다...',
+      waitingGameId: '공식 사이트 정보를 확인하고 있습니다...',
+      checkingAccount: '계정을 확인하고 있습니다...',
+      starting: '수집을 시작합니다...',
+      uploading: '전송하고 있습니다...',
+    },
+    noOpener: {
+      message: '이 페이지는 popn.gg 데이터 갱신 북마클릿을 통해 열어야 합니다.',
+      guide: '갱신 방법 보러가기',
+    },
+    phase: {
+      profile: '프로필을 확인하고 있습니다',
+      levels: '곡 목록을 읽고 있습니다',
+      details: '이번 버전 기록을 읽고 있습니다',
+      done: '수집을 마쳤습니다',
+    },
+    login: {
+      title: '로그인',
+      description: '비밀번호를 입력하면 바로 갱신을 시작합니다.',
+    },
+    register: {
+      title: '가입하기',
+      description: '앞으로 데이터를 갱신할 때 사용할 비밀번호를 설정합니다.',
+      note: '나중에 언제든 변경할 수 있습니다.',
+    },
+  },
   medal: {
     name: {
       'gold-star': '금★',

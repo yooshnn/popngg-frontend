@@ -11,6 +11,7 @@ export interface SongSummary {
   songHash: string;
   title: string;
   genre: string;
+  artist: string;
   bannerUrl: string;
   version: PopnVersion;
   isUpper: boolean;

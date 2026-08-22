@@ -33,13 +33,16 @@ function toClearSummaries(dto: MedalSummaryDto[]): ClearSummaries {
 
 export function toUserProfile(dto: UserProfileDto): UserProfile {
   return {
-    poptomoId: dto.id,
-    name: dto.name,
-    avatarUrl: dto.avatarUrl,
-    character: dto.character,
+    poptomoId: dto.poptomoId,
+    name: dto.userName,
+    avatarUrl: dto.profileImageUrl,
+    character: dto.characterName,
     comment: dto.comment,
-    popnClass: popnClass.from(dto.popnClass),
-    legacyPopnClass: popnClass.from(dto.legacyPopnClass),
+    hidden: dto.hidden,
+    popnClass: popnClass.from(dto.displayPopclass),
+    potentialPopnClass: popnClass.from(dto.potentialPopclass),
+    legacyPopnClass: popnClass.from(dto.legacyPopclass),
+    credits: dto.credits,
     clearSummaries: toClearSummaries(dto.medalSummaries),
     updatedAt: new Date(dto.updatedAt),
   };

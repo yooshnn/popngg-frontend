@@ -5,12 +5,13 @@ import { data } from 'react-router';
 import { getQueryClient } from '~/shared/api';
 import { ServerApiContext } from '~/shared/api/middleware.server';
 import { getInstance } from '~/shared/i18n/middleware.server';
+import { pageTitle } from '~/shared/lib/seo';
 import { containerStyles } from '~/shared/ui/container';
 import { userProfileQuery } from './api/queries';
 import { UserProfileLayout } from './ui/user-profile-layout';
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return loaderData ? [{ title: loaderData.name }] : [];
+  return loaderData ? [{ title: pageTitle(loaderData.name) }] : [];
 }
 
 export async function loader({ context, params }: Route.LoaderArgs) {

@@ -2,6 +2,7 @@ import type { Route } from './+types/route';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getInstance } from '~/shared/i18n/middleware.server';
+import { pageTitle } from '~/shared/lib/seo';
 import { containerStyles } from '~/shared/ui/container';
 import { Notice } from '~/shared/ui/notice';
 import { PageHeader } from '~/shared/ui/page-header';
@@ -13,7 +14,7 @@ const MOBILE_USER_AGENT = /android|iphone|ipad|ipod/i;
 type RenewPlatform = 'desktop' | 'mobile';
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return [{ title: loaderData.title }];
+  return [{ title: pageTitle(loaderData.title) }];
 }
 
 export function loader({ context, request }: Route.LoaderArgs) {

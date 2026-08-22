@@ -10,6 +10,7 @@ export const songSummaryDtoSchema = z.object({
   songHash: z.string(),
   title: z.string(),
   genre: z.string(),
+  artist: z.string(),
   bannerUrl: z.string(),
   version: z.number(),
   isUpper: z.boolean(),

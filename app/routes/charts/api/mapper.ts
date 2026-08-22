@@ -24,6 +24,7 @@ function toSongSummary(dto: SongSummaryDto): SongSummary {
     songHash: dto.songHash,
     title: dto.title,
     genre: dto.genre,
+    artist: dto.artist,
     bannerUrl: dto.bannerUrl,
     version,
     isUpper: dto.isUpper,

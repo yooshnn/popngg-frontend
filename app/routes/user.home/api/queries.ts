@@ -13,6 +13,15 @@ export function currentPopnClassTargetsQuery(userId: string, request: Api = api)
   });
 }
 
+export function potentialPopnClassTargetsQuery(userId: string, request: Api = api) {
+  return queryOptions({
+    queryKey: ['user', userId, 'popn-class-targets', 'potential'] as const,
+    queryFn: async () => toCurrentPopnClassTargets(
+      await request(`users/${userId}/popn-class-targets/potential`, currentPopnClassTargetsDtoSchema),
+    ),
+  });
+}
+
 export function legacyPopnClassTargetsQuery(userId: string, request: Api = api) {
   return queryOptions({
     queryKey: ['user', userId, 'popn-class-targets', 'legacy'] as const,

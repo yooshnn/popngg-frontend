@@ -5,7 +5,8 @@ import type { PopnVersion } from '~/entities/popn-version';
 import type { Rank } from '~/entities/rank';
 import type { Score } from '~/entities/score';
 
-export type PopnClassTargetCalculation = 'current' | 'legacy';
+export const popnClassTargetViews = ['potential', 'actual', 'legacy'] as const;
+export type PopnClassTargetView = (typeof popnClassTargetViews)[number];
 
 export interface PopnClassTarget {
   id: string;

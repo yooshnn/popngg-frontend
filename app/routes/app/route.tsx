@@ -1,5 +1,6 @@
 import type { Route } from './+types/route';
 import { isRouteErrorResponse, Outlet } from 'react-router';
+import { pageTitle } from '~/shared/lib/seo';
 import { NotFoundPage } from './ui/error/not-found-page';
 import { UnexpectedErrorPage } from './ui/error/unexpected-error-page';
 import { AppFooter } from './ui/shell/app-footer';
@@ -7,7 +8,7 @@ import { AppHeader } from './ui/shell/app-header';
 
 export function meta({ error }: Route.MetaArgs) {
   if (isRouteErrorResponse(error) && typeof error.data === 'object' && error.data !== null && 'title' in error.data && typeof error.data.title === 'string') {
-    return [{ title: error.data.title }];
+    return [{ title: pageTitle(error.data.title) }];
   }
 
   return [];

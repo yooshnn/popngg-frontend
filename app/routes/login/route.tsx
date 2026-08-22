@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { rememberedIdCookie } from '~/features/auth';
 import { getInstance } from '~/shared/i18n/middleware.server';
+import { pageTitle } from '~/shared/lib/seo';
 import { buttonStyles } from '~/shared/ui/button';
 import { Link } from '~/shared/ui/link';
 import { FocusHeader } from '~/widgets/focus-header';
@@ -20,7 +21,7 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return loaderData ? [{ title: loaderData.title }] : [];
+  return loaderData ? [{ title: pageTitle(loaderData.title) }] : [];
 }
 
 export function ErrorBoundary() {

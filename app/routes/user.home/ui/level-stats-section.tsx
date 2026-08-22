@@ -10,7 +10,7 @@ import { SectionHeader } from '~/shared/ui/section-header';
 import { SegmentedControl } from '~/shared/ui/segmented-control';
 import { Skeleton } from '~/shared/ui/skeleton';
 import { levelStatsQuery } from '../api/queries';
-import { getLevelStatsPresentation, LEVEL_STATS_MODES } from '../lib/level-stats';
+import { findDefaultLevelIndex, getLevelStatsPresentation, LEVEL_STATS_MODES } from '../lib/level-stats';
 import { levelStatsSearchParams } from '../lib/level-stats-search-params';
 import { LevelStatsChart } from './level-stats-chart';
 import { LevelStepper } from './level-stepper';
@@ -33,13 +33,13 @@ export function LevelStatsSection({ userId }: { userId: string }) {
       />
 
       <QueryState pending={<LevelStatsSkeleton />} query={stats}>
-        {data => isNonEmpty(data) ? <LevelStatsContent stats={data} /> : <EmptyState />}
+        {data => isNonEmpty(data) ? <LevelStatsContent stats={data} userId={userId} /> : <EmptyState />}
       </QueryState>
     </section>
   );
 }
 
-function LevelStatsContent({ stats }: { stats: NonEmptyArray<LevelStats> }) {
+function LevelStatsContent({ stats, userId }: { stats: NonEmptyArray<LevelStats>; userId: string }) {
   const [{ level, mode }, setSearchParams] = useQueryStates(levelStatsSearchParams);
   const { current, stepperProps } = useLevelSelection(stats, level, nextLevel => setSearchParams({ level: nextLevel }));
   const presentation = useMemo(
@@ -59,6 +59,7 @@ function LevelStatsContent({ stats }: { stats: NonEmptyArray<LevelStats> }) {
           level={current.level}
           presentation={presentation}
           total={current.total}
+          userId={userId}
         />
       </div>
     </>
@@ -105,7 +106,7 @@ function useLevelSelection(
   const selectedIndex = selectedLevel === null
     ? -1
     : sortedStats.findIndex(item => item.level === selectedLevel);
-  const currentIndex = selectedIndex >= 0 ? selectedIndex : sortedStats.length - 1;
+  const currentIndex = selectedIndex >= 0 ? selectedIndex : findDefaultLevelIndex(sortedStats);
   const current = sortedStats[currentIndex] ?? sortedStats[0];
 
   function move(offset: number) {

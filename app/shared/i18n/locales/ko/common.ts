@@ -280,8 +280,20 @@ const common = {
     phase: {
       profile: '프로필을 확인하고 있습니다',
       levels: '곡 목록을 읽고 있습니다',
-      details: '이번 버전 기록을 읽고 있습니다',
+      newsongs: '신곡 목록을 읽고 있습니다',
+      popnclass: '팝픈클래스를 계산하고 있습니다',
       done: '수집을 마쳤습니다',
+    },
+    progress: {
+      label: '수집 단계',
+      records: '채보 {{count}}개',
+      scan: '레벨 {{level}} · 상세 {{count}}건',
+      elapsed: '{{minutes}}분 {{seconds}}초 경과',
+      skipped: '건너뜀',
+    },
+    skip: {
+      action: '팝클 대상곡 계산 스킵',
+      undo: '스킵 취소하기',
     },
     login: {
       title: '로그인',
@@ -291,6 +303,32 @@ const common = {
       title: '가입하기',
       description: '앞으로 데이터를 갱신할 때 사용할 비밀번호를 설정합니다.',
       note: '나중에 언제든 변경할 수 있습니다.',
+    },
+    preview: {
+      title: '수집 결과 미리보기',
+      description: '아직 서버로 전송하지 않습니다. 결과만 확인할 수 있습니다.',
+      textareaLabel: '수집 결과 JSON',
+      tabLabel: '보기 방식',
+      tab: {
+        debug: '디버그 전체',
+        wire: '전송본',
+      },
+      copy: '복사',
+      copied: '복사했습니다',
+      download: '다운로드',
+      stats: {
+        records: '채보',
+        played: '플레이한 채보',
+        details: '상세 조회',
+        levelPages: '레벨 목록 페이지',
+        selected: '팝픈클래스 대상',
+        bytes: '전송 크기',
+        elapsed: '소요 시간',
+      },
+      warnings: {
+        title: '경고 {{count}}건',
+        empty: '경고가 없습니다.',
+      },
     },
   },
   medal: {
@@ -450,9 +488,10 @@ const common = {
       popnClassTargets: {
         title: '팝클 대상곡',
         description: '팝픈클래스 산정에 반영되는 대상곡입니다.',
-        calculation: {
+        view: {
           label: '팝픈클래스 계산식',
-          current: '현행식',
+          actual: '현행식',
+          potential: '포텐셜',
           legacy: '구 계산식',
         },
         group: {
@@ -460,9 +499,13 @@ const common = {
           oldSongs: '구곡',
           legacy: '대상곡',
         },
+        result: '계산 결과',
         songCount: '{{count}}곡',
         average: '평균 {{value}}',
         empty: '아직 해당하는 기록이 없습니다.',
+        notRenewed: '아직 팝클 대상곡 갱신을 하지 않았습니다.',
+        potentialNotice: '포텐셜은 역대 스코어로 계산한 결과입니다.',
+        legacyNotice: 'Jam & Fizz까지 사용된 계산식으로 계산한 결과입니다.',
       },
       levelStats: {
         title: '피자',
@@ -479,6 +522,7 @@ const common = {
         totalLabel: '전체 채보',
         chartLabel: '레벨 {{level}} {{mode}} 분포, 전체 {{count}}채보',
       },
+      empty: '등록된 플레이 데이터가 없습니다.',
     },
   },
   users: {

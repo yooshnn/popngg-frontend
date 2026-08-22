@@ -1,4 +1,4 @@
-import type { CollectPhase, RenewalPayload } from '~/features/renewal';
+import type { CollectProgress, RenewalPayload } from '~/features/renewal';
 
 // Resolved from hasOpener — is there a bookmarklet channel at all
 export type ChannelState
@@ -17,7 +17,9 @@ export type IdentityState
 
 // Resolved from run — what useRenewalHandoff stores while collecting/uploading
 export type RunState
-  = | { status: 'collecting'; phase: CollectPhase; done: number; total: number }
+  = | { status: 'collecting'; progress: CollectProgress }
+    // Upload is flagged off until the backend accepts /renewals — this is where the run lands instead.
+    | { status: 'preview'; payload: RenewalPayload }
     | { status: 'uploading' }
     | { status: 'completed'; userId: string }
     // `message` is raw wire/server text kept for diagnostics — the popup renders t(renewal.error.<code>)

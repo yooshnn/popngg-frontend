@@ -7,17 +7,28 @@ export const medalSummaryDtoSchema = z.object({
   total: z.number(),
 });
 
+export const creditsDtoSchema = z.object({
+  normal: z.number(),
+  extra: z.number(),
+  timePlay10: z.number(),
+  timePlay16: z.number(),
+});
+
 export const userProfileDtoSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  avatarUrl: z.string().nullable(),
-  character: z.string(),
+  poptomoId: z.string(),
+  userName: z.string(),
+  characterName: z.string(),
   comment: z.string(),
-  popnClass: z.number(),
-  legacyPopnClass: z.number(),
+  profileImageUrl: z.string().nullable(),
+  hidden: z.boolean(),
+  displayPopclass: z.number(),
+  potentialPopclass: z.number(),
+  legacyPopclass: z.number(),
+  credits: creditsDtoSchema,
   medalSummaries: z.array(medalSummaryDtoSchema),
   updatedAt: z.string(),
 });
 
 export type UserProfileDto = z.output<typeof userProfileDtoSchema>;
 export type MedalSummaryDto = z.output<typeof medalSummaryDtoSchema>;
+export type CreditsDto = z.output<typeof creditsDtoSchema>;

@@ -42,6 +42,7 @@ export interface MedalSummaryItem {
   id: ClearType;
   count: number;
   color: string;
+  members: readonly Medal[];
 }
 
 export interface RankSummaryItem {
@@ -49,6 +50,7 @@ export interface RankSummaryItem {
   id: RankFamily;
   count: number;
   color: string;
+  members: readonly Rank[];
 }
 
 export type LevelStatsSummaryItem = MedalSummaryItem | RankSummaryItem;
@@ -74,6 +76,23 @@ const primaryClearTypes = ['perfect', 'full-combo', 'clear'] as const satisfies 
 const secondaryClearTypes = ['assist', 'failed'] as const satisfies readonly ClearType[];
 const primaryRankFamilies = ['S', 'AAA', 'AA'] as const satisfies readonly RankFamily[];
 const secondaryRankFamilies = ['A', 'B', 'belowB'] as const satisfies readonly RankFamily[];
+
+const clearedMedals = clearType.milestones.flatMap(type => clearType.members(type));
+
+/**
+ * The highest level index the player has actually cleared something on, not
+ * merely touched — a level can carry only "none" medals if every attempt
+ * failed. Assumes `sortedStats` is ascending by level.
+ */
+export function findDefaultLevelIndex(sortedStats: readonly LevelStats[]): number {
+  for (let index = sortedStats.length - 1; index >= 0; index -= 1) {
+    if (clearedMedals.some(value => sortedStats[index].medalCounts[value] > 0)) {
+      return index;
+    }
+  }
+
+  return sortedStats.length - 1;
+}
 
 export function getLevelStatsPresentation(
   mode: LevelStatsMode,
@@ -131,11 +150,13 @@ function createMedalSummary(stats: LevelStats): LevelStatsSummary<MedalSummaryIt
 }
 
 function createMedalSummaryItem(stats: LevelStats, type: ClearType): MedalSummaryItem {
+  const members = clearType.members(type);
   return {
     kind: 'clear-type',
     id: type,
-    count: sumCounts(stats.medalCounts, clearType.members(type)),
+    count: sumCounts(stats.medalCounts, members),
     color: clearType.color(type),
+    members,
   };
 }
 
@@ -147,11 +168,13 @@ function createRankSummary(stats: LevelStats): LevelStatsSummary<RankSummaryItem
 }
 
 function createRankSummaryItem(stats: LevelStats, family: RankFamily): RankSummaryItem {
+  const members = rankFamily.members(family);
   return {
     kind: 'rank-family',
     id: family,
-    count: sumCounts(stats.rankCounts, rankFamily.members(family)),
+    count: sumCounts(stats.rankCounts, members),
     color: rankFamily.color(family),
+    members,
   };
 }
 

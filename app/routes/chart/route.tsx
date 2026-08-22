@@ -7,13 +7,14 @@ import { difficulty } from '~/entities/difficulty';
 import { getQueryClient } from '~/shared/api';
 import { ServerApiContext } from '~/shared/api/middleware.server';
 import { getInstance } from '~/shared/i18n/middleware.server';
+import { pageTitle } from '~/shared/lib/seo';
 import { containerStyles } from '~/shared/ui/container';
 import { chartDetailQuery } from './api/queries';
 import { ChartDetailLayout } from './ui/chart-detail-layout';
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return loaderData
-    ? [{ title: `${loaderData.title} · ${difficulty.label(loaderData.difficulty)} ${loaderData.level}` }]
+    ? [{ title: pageTitle(`${loaderData.title} · ${difficulty.label(loaderData.difficulty)} ${loaderData.level}`) }]
     : [];
 }
 

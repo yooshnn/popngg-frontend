@@ -14,11 +14,11 @@ const definitions = {
   'bronze-star': { code: 5, color: '#ff4d80', symbol: '★' },
   'bronze-diamond': { code: 6, color: '#db3765', symbol: '◆' },
   'bronze-circle': { code: 7, color: '#c42753', symbol: '●' },
-  'easy': { code: 8, color: '#84e0ac', symbol: '☘' },
-  'long-off': { code: 9, color: '#b86b32', symbol: '❀' },
-  'black-star': { code: 10, color: '#8aa8d6', symbol: '★' },
-  'black-diamond': { code: 11, color: '#7392c6', symbol: '◆' },
-  'black-circle': { code: 12, color: '#5d7fb3', symbol: '●' },
+  'black-star': { code: 8, color: '#8aa8d6', symbol: '★' },
+  'black-diamond': { code: 9, color: '#7392c6', symbol: '◆' },
+  'black-circle': { code: 10, color: '#5d7fb3', symbol: '●' },
+  'easy': { code: 11, color: '#84e0ac', symbol: '☘' },
+  'long-off': { code: 12, color: '#b86b32', symbol: '❀' },
   'none': { code: 13, color: '#4c505a', symbol: '—' },
 } as const satisfies Record<string, MedalDefinition>;
 

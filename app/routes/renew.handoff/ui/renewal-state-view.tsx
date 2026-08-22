@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { EAGATE_PLAYDATA_URL, toRenewalErrorCode } from '~/features/renewal';
 import { Button } from '~/shared/ui/button';
 import { Link, linkStyles } from '~/shared/ui/link';
+import { CollectProgress } from './collect-progress';
 import { HandoffLoginForm } from './handoff-login-form';
+import { PayloadPreview } from './payload-preview';
 import { RegisterForm } from './register-form';
 
 const RENEW_GUIDE_PATH = '/renew';
@@ -45,38 +47,46 @@ function StepNote({ children }: { children: ReactNode }) {
   return <p className="mt-1 text-xs leading-5 text-pretty text-fg-neutral-subtle">{children}</p>;
 }
 
-function CollectingState({ state }: { state: Extract<ActiveRenewalState, { status: 'collecting' }> }) {
+interface SkipControl {
+  skipRequested: boolean;
+  skipSettled: boolean;
+  onSkip: (skip: boolean) => void;
+}
+
+function CollectingState({
+  state,
+  skip,
+}: {
+  state: Extract<ActiveRenewalState, { status: 'collecting' }>;
+  skip: SkipControl;
+}) {
   const { t } = useTranslation();
-  const hasProgress = state.total > 0;
-  const progress = hasProgress ? Math.min(100, (state.done / state.total) * 100) : 0;
-  const current = hasProgress ? Math.min(state.done, state.total) : 0;
+  const { phase } = state.progress;
+
+  if (phase === null) {
+    return <PendingRow>{t('renewal.status.checking')}</PendingRow>;
+  }
 
   return (
-    <>
-      <PendingRow>
-        {t(`renewal.phase.${state.phase}`)}
-        {hasProgress && <span className="tabular-nums">{` (${state.done}/${state.total})`}</span>}
-      </PendingRow>
-      {hasProgress && (
-        <div
-          aria-label={t(`renewal.phase.${state.phase}`)}
-          aria-valuemax={state.total}
-          aria-valuemin={0}
-          aria-valuenow={current}
-          className="mt-2 h-2 w-full overflow-hidden rounded-full bg-bg-neutral-weak"
-          role="progressbar"
-        >
-          <div
-            className="h-full rounded-full bg-bg-brand-solid transition-[width]"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      )}
-    </>
+    <CollectProgress
+      onSkip={skip.onSkip}
+      phase={phase}
+      progress={state.progress}
+      skipRequested={skip.skipRequested}
+      skipSettled={skip.skipSettled}
+    />
   );
 }
 
-export function RenewalStateView({ state, retry }: { state: ActiveRenewalState; retry: () => void }) {
+export function RenewalStateView({
+  state,
+  retry,
+  skip,
+}: {
+  state: ActiveRenewalState;
+  retry: () => void;
+  skip: SkipControl;
+}) {
   const { t } = useTranslation();
 
   switch (state.status) {
@@ -111,7 +121,10 @@ export function RenewalStateView({ state, retry }: { state: ActiveRenewalState; 
       return <PendingRow>{t('renewal.status.starting')}</PendingRow>;
 
     case 'collecting':
-      return <CollectingState state={state} />;
+      return <CollectingState skip={skip} state={state} />;
+
+    case 'preview':
+      return <PayloadPreview payload={state.payload} />;
 
     case 'uploading':
       return <PendingRow>{t('renewal.status.uploading')}</PendingRow>;

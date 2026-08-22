@@ -14,6 +14,7 @@ export {
   type UrlBinding,
   type UrlParserMap,
   type UrlRange,
+  writeBinding,
 } from './engine/core/url-binding';
 export {
   type FilterConfig,

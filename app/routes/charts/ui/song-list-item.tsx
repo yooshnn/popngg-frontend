@@ -27,7 +27,7 @@ export function SongListItem({ song }: { song: SongSummary }) {
       <div className="flex min-w-0 flex-col gap-y-2 md:flex-row md:items-center md:gap-x-3">
         {highestChart
           ? (
-              <Link className="block shrink-0 rounded-sm" to={`/chart/${song.songHash}/${highestChart.difficulty}`}>
+              <Link className="block shrink-0 rounded-sm w-fit" to={`/chart/${song.songHash}/${highestChart.difficulty}`}>
                 <img
                   alt={song.title}
                   className="block h-auto w-61 rounded-sm"
@@ -47,11 +47,12 @@ export function SongListItem({ song }: { song: SongSummary }) {
 
         <div className="flex min-h-12 min-w-0 flex-1 items-center gap-x-3 md:min-h-0">
           <div className="min-w-0 flex-1">
-            <span className="block truncate text-sm font-medium text-fg-neutral">{primary}</span>
-            <span className="mt-1 block truncate text-xs text-fg-neutral-subtle">{secondary}</span>
+            <span className="mt-0.5 block truncate text-[10px] leading-none text-fg-neutral-muted">{secondary}</span>
+            <span className="mt-0.5 block truncate text-[15px] font-medium text-fg-neutral">{primary}</span>
+            <span className="mt-0.5 block truncate text-xs text-fg-neutral-subtle">{song.artist}</span>
           </div>
 
-          <div className="flex shrink-0 items-center gap-1.5 md:justify-end">
+          <div className="flex shrink-0 items-center gap-1 md:justify-end">
             {difficulty.all.map((item) => {
               const chart = song.charts.find(candidate => candidate.difficulty === item);
               return chart

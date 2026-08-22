@@ -1,28 +1,28 @@
 import type { Route } from './+types/route';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '~/shared/api';
-import { ServerApiContext } from '~/shared/api/middleware.server';
-import { currentPopnClassTargetsQuery, levelStatsQuery } from './api/queries';
+import type { LevelStats } from './model/types';
+import { useQuery } from '@tanstack/react-query';
+import { levelStatsQuery } from './api/queries';
+import { EmptyHome } from './ui/empty-home';
 import { LevelStatsSection } from './ui/level-stats-section';
 import { PopnClassTargetSection } from './ui/popn-class-target-section';
 
-export async function loader({ context, params }: Route.LoaderArgs) {
-  const queryClient = getQueryClient();
-  const request = context.get(ServerApiContext);
+export default function UserHomeRoute({ params }: Route.ComponentProps) {
+  const stats = useQuery(levelStatsQuery(params.userId));
 
-  await Promise.all([
-    queryClient.prefetchQuery(currentPopnClassTargetsQuery(params.userId, request)),
-    queryClient.prefetchQuery(levelStatsQuery(params.userId, request)),
-  ]);
+  // Undefined during loading/error: those states are each section's own QueryState to handle,
+  // not this gate's — deciding here too would double up on the skeleton/retry UI.
+  if (stats.data && !hasRecords(stats.data)) {
+    return <EmptyHome />;
+  }
 
-  return { dehydratedState: dehydrate(queryClient) };
-}
-
-export default function UserHomeRoute({ loaderData, params }: Route.ComponentProps) {
   return (
-    <HydrationBoundary state={loaderData.dehydratedState}>
+    <>
       <PopnClassTargetSection userId={params.userId} />
       <LevelStatsSection userId={params.userId} />
-    </HydrationBoundary>
+    </>
   );
+}
+
+function hasRecords(stats: LevelStats[]): boolean {
+  return stats.some(item => item.total > 0);
 }

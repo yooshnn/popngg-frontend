@@ -20,13 +20,16 @@ export const RENEWAL_RESULT = {
 };
 
 export const USER_PROFILE = {
-  id: SESSION.poptomoId,
-  name: SESSION.userName,
-  avatarUrl: null,
-  character: '和泉一舞',
+  poptomoId: SESSION.poptomoId,
+  userName: SESSION.userName,
+  characterName: '和泉一舞',
   comment: '「スコアよりクリアメダル優先」',
-  popnClass: 17800,
-  legacyPopnClass: 9850,
+  profileImageUrl: null,
+  hidden: false,
+  displayPopclass: 17800,
+  potentialPopclass: 17800,
+  legacyPopclass: 9850,
+  credits: { normal: 0, extra: 0, timePlay10: 0, timePlay16: 0 },
   medalSummaries: [
     { kind: 'clear', maxLevel: 50, achieved: 520, total: 1240 },
     { kind: 'full-combo', maxLevel: 49, achieved: 142, total: 1240 },

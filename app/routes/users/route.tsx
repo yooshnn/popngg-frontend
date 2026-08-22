@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { TableShell, useTable } from '~/features/table';
 import { getInstance } from '~/shared/i18n/middleware.server';
+import { pageTitle } from '~/shared/lib/seo';
 import { containerStyles } from '~/shared/ui/container';
 import { PageHeader } from '~/shared/ui/page-header';
 import { usersQuery } from './api/queries';
@@ -10,7 +11,7 @@ import { tableConfig } from './model/table';
 import { UserRankingList } from './ui/user-ranking-list';
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return [{ title: loaderData.title }];
+  return [{ title: pageTitle(loaderData.title) }];
 }
 
 export function loader({ context }: Route.LoaderArgs) {

@@ -286,8 +286,20 @@ const common = {
     phase: {
       profile: 'プロフィールを確認しています',
       levels: '曲リストを読み込んでいます',
-      details: '今作の記録を読み込んでいます',
+      newsongs: '新曲リストを読み込んでいます',
+      popnclass: 'ポップンクラスを計算しています',
       done: '取得が完了しました',
+    },
+    progress: {
+      label: '取得ステップ',
+      records: '譜面 {{count}}件',
+      scan: 'レベル {{level}} ・ 詳細 {{count}}件',
+      elapsed: '{{minutes}}分{{seconds}}秒経過',
+      skipped: 'スキップ',
+    },
+    skip: {
+      action: 'ポップンクラス対象曲の計算をスキップ',
+      undo: 'スキップを取り消す',
     },
     login: {
       title: 'ログイン',
@@ -297,6 +309,32 @@ const common = {
       title: '新規登録',
       description: '今後データを更新するときに使うパスワードを設定します。',
       note: 'あとからいつでも変更できます。',
+    },
+    preview: {
+      title: '取得結果のプレビュー',
+      description: 'まだサーバーには送信していません。結果の確認だけができます。',
+      textareaLabel: '取得結果のJSON',
+      tabLabel: '表示形式',
+      tab: {
+        debug: 'デバッグ全体',
+        wire: '送信データ',
+      },
+      copy: 'コピー',
+      copied: 'コピーしました',
+      download: 'ダウンロード',
+      stats: {
+        records: '譜面',
+        played: 'プレー済み譜面',
+        details: '詳細取得',
+        levelPages: 'レベル一覧ページ',
+        selected: 'ポップンクラス対象',
+        bytes: '送信サイズ',
+        elapsed: '所要時間',
+      },
+      warnings: {
+        title: '警告 {{count}}件',
+        empty: '警告はありません。',
+      },
     },
   },
   medal: {
@@ -456,9 +494,10 @@ const common = {
       popnClassTargets: {
         title: 'ポックラ対象曲',
         description: 'ポップンクラスの計算対象となる楽曲です。',
-        calculation: {
+        view: {
           label: 'ポップンクラスの計算式',
-          current: '現行式',
+          actual: '現行式',
+          potential: 'ポテンシャル',
           legacy: '旧計算式',
         },
         group: {
@@ -466,9 +505,13 @@ const common = {
           oldSongs: '旧曲',
           legacy: '対象曲',
         },
+        result: '計算結果',
         songCount: '{{count}}曲',
         average: '平均 {{value}}',
         empty: 'まだ該当する記録がありません。',
+        notRenewed: 'まだポップンクラス対象曲の更新が行われていません。',
+        potentialNotice: 'ポテンシャルは歴代スコアで計算した結果です。',
+        legacyNotice: 'Jam & Fizzまで使用されていた計算式で計算した結果です。',
       },
       levelStats: {
         title: '円グラフ',
@@ -485,6 +528,7 @@ const common = {
         totalLabel: '全譜面',
         chartLabel: 'レベル{{level}}の{{mode}}分布、全{{count}}譜面',
       },
+      empty: '登録されたプレイデータがありません。',
     },
   },
   users: {
